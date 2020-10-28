@@ -1,5 +1,5 @@
 <?php
-error_clear_last();
+//error_clear_last();
 /**
  * PHPMailer SPL autoloader.
  * PHP Version 5

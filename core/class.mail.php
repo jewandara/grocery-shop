@@ -24,8 +24,10 @@ class MailServer {
 		if($msg == NULL){ $msg = $this->contents; }
 		$message = $msg;
 		$message = wordwrap($message, 70);
- 		require dirname(__FILE__).'/mail/PHPMailer/PHPMailerAutoload.php';
-	    $mail = new PHPMailer();
+ 		//require dirname(__FILE__).'/mail/PHPMailer/PHPMailerAutoload.php';
+ 		require dirname(__FILE__).'/mail/src/PHPMailer.php';
+ 		require dirname(__FILE__).'/mail/src/SMTP.php';
+	    $mail = new PHPMailer\PHPMailer\PHPMailer();
 	    try {
 	        $mail->isSMTP();
 	        $mail->SMTPDebug  = 1; 
