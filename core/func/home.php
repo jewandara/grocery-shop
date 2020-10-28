@@ -1,0 +1,1 @@
+<?php securePage($DOMAIN_CURRENT_PATH); ?>
