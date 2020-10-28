@@ -1,5 +1,5 @@
 <?php
-error_clear_last();
+//error_clear_last();
 class MailServer {
 	public $contents = NULL;
 	public function newTemplateMsg($template, $additionalHooks)
@@ -24,11 +24,11 @@ class MailServer {
 		if($msg == NULL){ $msg = $this->contents; }
 		$message = $msg;
 		$message = wordwrap($message, 70);
- 		require 'mail/PHPMailer/PHPMailerAutoload.php';
+ 		require dirname(__FILE__).'/mail/PHPMailer/PHPMailerAutoload.php';
 	    $mail = new PHPMailer();
 	    try {
 	        $mail->isSMTP();
-	        $mail->SMTPDebug  = 0; 
+	        $mail->SMTPDebug  = 1; 
 	        $mail->SMTPAuth   = true;
 	        $mail->SMTPSecure = 'ssl';
 	        $mail->Port       =  465;
