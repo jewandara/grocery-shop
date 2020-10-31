@@ -1,419 +1,136 @@
-<?php
-  securePage($_SERVER['PHP_SELF']);
-?>
+<?php securePage($_SERVER['PHP_SELF']); ?>
 
 
-<div class="gs-main" style="margin-left:250px;">
-    <div id="myTop" class="gs-container gs-top gs-theme gs-large" style="padding:8.2px 10px">
-      <p>
-        <i class="fa fa-bars gs-button gs-teal gs-hide-large gs-xlarge" onclick="menuOpen()"></i>
-        <span id="myIntro" class="gs-hide">GROCERY DASHBOARD</span>
-      </p>
+<div class='gs-main' style='margin-left:250px;'>
+	<div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
+		<p>
+		  <i class='fa fa-bars gs-button gs-teal gs-hide-large gs-xlarge' onclick='menuOpen()'></i>
+		  <span id='topMenuIntro' class='gs-hide'>GROCERY DASHBOARD</span>
+		</p>
+	</div>
+	<header class='gs-container gs-theme' style='padding:32px 24px'>
+		<h1 class='gs-xxxlarge'><i class='fa fa-home'></i>DASHBOARD</h1>
+	</header>
+	<!--  
+    	<div class="gs-row-padding" style="padding:22px; margin-bottom:-32px">
+			<div class="alert alert-simple alert-warning" style="width: 100%" >
+	          <i class="start-icon fa fa-exclamation-triangle faa-times gs-xxlarge"></i>
+	          <strong>Warning!</strong> Better check yourself, you'gjfghjghjghjre not looking too good.
+	        </div>
+	    </div>
+	-->
+	<?php 
+		$OutOfStock = selectOutOfStock();
+		if(!empty($OutOfStock)){
+			echo "<div class='gs-row-padding' style='padding:22px; margin-bottom:-32px'>
+			        <div class='alert alert-simple alert-danger' style='width: 100%' >
+			          <i class='start-icon fa fa-times-circle faa-times gs-xxlarge';'></i>
+			          <b>Out of Stock Warning!</b>  Bellow Items are unavailable for immediate sale. Please Update Stock.
+			          <table style='padding-top:20px; margin-left: auto; margin-right: auto;'>";
+						foreach ($OutOfStock as $dt) {
+							echo "<tr>
+									<td style='padding-right:10px'><i class='fa fa-file-text'></i></td>
+									<td style='padding:2px;padding-left:10px;padding-right:15px'>".(string)$dt["category"]."</td>
+									<td style='padding:2px;padding-left:10px;padding-right:15px'>".(string)$dt["code"]."</td>
+									<td> - ".(string)$dt["name"]."</td>
+								</tr>";
+						}
+			echo "		</table>
+					</div>
+			    </div>";
+		} 
+	?>
+
+    <div class="gs-row-padding gs-margin-bottom" style="padding-left:32px;padding-right:32px; padding-top:32px; padding-bottom:5px">
+      <div class="gs-half">
+        <div class="gs-container gs-red gs-padding-16">
+          <div class="gs-left"><i class="fa fa-clock-o gs-xxxlarge"></i></div>
+          <div class="gs-right">
+            <h3><?=$totalOrdersStatusPending?></h3>
+          </div>
+          <div class="gs-clear"></div>
+          <h4>TOTAL PENDING ORDERS</h4>
+        </div>
+      </div>
+      <div class="gs-half">
+        <div class="gs-container gs-green gs-padding-16">
+          <div class="gs-left"><i class="fa fa-check-square-o gs-xxxlarge"></i></div>
+          <div class="gs-right">
+            <h3><?=$totalOrdersStatusClose?></h3>
+          </div>
+          <div class="gs-clear"></div>
+          <h4>TOTAL COMPLETED ORDERS</h4>
+        </div>
+      </div>
     </div>
-    <header class="gs-container gs-theme" style="padding:32px 24px">
-      <h1 class="gs-xxxlarge"><i class="fa fa-home"></i>DASHBOARD</h1>
-    </header>
 
-    <div class="gs-row-padding gs-margin-bottom" style="padding:32px">
+    <div class="gs-row-padding gs-margin-bottom" style="padding-left:32px;padding-right:32px; padding-top:5px; padding-bottom:10px">
       <div class="gs-quarter">
         <div class="gs-container gs-deep-purple gs-padding-16">
           <div class="gs-left"><i class="fa fa-shopping-cart gs-xxxlarge"></i></div>
           <div class="gs-right">
-            <h3>52</h3>
+            <h3><?=$totalOrders?></h3>
           </div>
           <div class="gs-clear"></div>
-          <h4>ORDERS</h4>
+          <h4>TOTAL ORDERS</h4>
         </div>
       </div>
       <div class="gs-quarter">
         <div class="gs-container gs-purpole gs-padding-16">
           <div class="gs-left"><i class="fa fa-file-text gs-xxxlarge"></i></div>
           <div class="gs-right">
-            <h3>99</h3>
+            <h3><?=$totalItems?></h3>
           </div>
           <div class="gs-clear"></div>
-          <h4>ITEMS</h4>
+          <h4>TOTAL ITEMS</h4>
         </div>
       </div>
       <div class="gs-quarter">
         <div class="gs-container gs-deep-purple gs-padding-16">
           <div class="gs-left"><i class="fa fa-users gs-xxxlarge"></i></div>
           <div class="gs-right">
-            <h3>23</h3>
+            <h3><?=$totalUsers?></h3>
           </div>
           <div class="gs-clear"></div>
-          <h4>USERS</h4>
+          <h4>TOTAL USERS</h4>
         </div>
       </div>
       <div class="gs-quarter">
         <div class="gs-container gs-purpole gs-text-white gs-padding-16">
           <div class="gs-left"><i class="fa fa-smile-o gs-xxxlarge"></i></div>
           <div class="gs-right">
-            <h3>50</h3>
+            <h3><?=$totalCustomers?></h3>
           </div>
           <div class="gs-clear"></div>
-          <h4>CUSTOMERS</h4>
+          <h4>TOTAL CUSTOMERS</h4>
         </div>
       </div>
     </div>
 
-    <div class="gs-row-padding" style="padding:30px">
-        <div class="gs-third">
+    <div class="gs-row-padding" style="padding:32px">
+        <div class="gs-third"  style="margin-top: -40px; margin-bottom: 20px">
           <div id="canvas-holder" style="width: 300px;">
+            <h5>Feeds of High Demand Goods</h5>
             <canvas id="chart-area" width="600" height="600" style="display: block; height: 300px; width: 300px;" class="chartjs-render-monitor"></canvas>
           </div>
-          <script>
-            Chart.defaults.global.tooltips.custom = function(tooltip) {
-              // Tooltip Element
-              var tooltipEl = document.getElementById('chartjs-tooltip');
-
-              // Hide if no tooltip
-              if (tooltip.opacity === 0) {
-                tooltipEl.style.opacity = 0;
-                return;
-              }
-
-              // Set caret Position
-              tooltipEl.classList.remove('above', 'below', 'no-transform');
-              if (tooltip.yAlign) {
-                tooltipEl.classList.add(tooltip.yAlign);
-              } else {
-                tooltipEl.classList.add('no-transform');
-              }
-
-              function getBody(bodyItem) {
-                return bodyItem.lines;
-              }
-
-              // Set Text
-              if (tooltip.body) {
-                var titleLines = tooltip.title || [];
-                var bodyLines = tooltip.body.map(getBody);
-
-                var innerHtml = '<thead>';
-
-                titleLines.forEach(function(title) {
-                  innerHtml += '<tr><th>' + title + '</th></tr>';
-                });
-                innerHtml += '</thead><tbody>';
-
-                bodyLines.forEach(function(body, i) {
-                  var colors = tooltip.labelColors[i];
-                  var style = 'background:' + colors.backgroundColor;
-                  style += '; border-color:' + colors.borderColor;
-                  style += '; border-width: 2px';
-                  var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
-                  innerHtml += '<tr><td>' + span + body + '</td></tr>';
-                });
-                innerHtml += '</tbody>';
-
-                var tableRoot = tooltipEl.querySelector('table');
-                tableRoot.innerHTML = innerHtml;
-              }
-
-              var positionY = this._chart.canvas.offsetTop;
-              var positionX = this._chart.canvas.offsetLeft;
-
-              // Display, position, and set styles for font
-              tooltipEl.style.opacity = 1;
-              tooltipEl.style.left = positionX + tooltip.caretX + 'px';
-              tooltipEl.style.top = positionY + tooltip.caretY + 'px';
-              tooltipEl.style.fontFamily = tooltip._bodyFontFamily;
-              tooltipEl.style.fontSize = tooltip.bodyFontSize;
-              tooltipEl.style.fontStyle = tooltip._bodyFontStyle;
-              tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
-            };
-
-            var config = {
-              type: 'pie',
-              data: {
-                datasets: [{
-                  data: [300, 50, 100, 40, 10],
-                  backgroundColor: [
-                    window.chartColors.red,
-                    window.chartColors.orange,
-                    window.chartColors.yellow,
-                    window.chartColors.green,
-                    window.chartColors.blue,
-                  ],
-                }],
-                labels: [
-                  'Red',
-                  'Orange',
-                  'Yellow',
-                  'Green',
-                  'Blue'
-                ]
-              },
-              options: {
-                responsive: true,
-                legend: {
-                  display: false
-                },
-                tooltips: {
-                  enabled: false,
-                }
-              }
-            };
-
-            function loadPie() {
-              var ctx = document.getElementById('chart-area').getContext('2d');
-              window.myPie = new Chart(ctx, config);
-            }
-          </script>
+          <div id="chartjspie-tooltip"> <table></table> </div>
         </div>
         <div class="gs-twothird">
-          <h5>Feeds</h5>
+          <h5>Total Revenue of Grocery Shop</h5>
           <table class="gs-table gs-striped gs-white">
-            <tr>
-              <td><i class="fa fa-user gs-text-blue gs-large"></i></td>
-              <td>New record, over 90 views.</td>
-              <td><i>10 mins</i></td>
-            </tr>
-            <tr>
-              <td><i class="fa fa-bell gs-text-red gs-large"></i></td>
-              <td>Database error.</td>
-              <td><i>15 mins</i></td>
-            </tr>
-            <tr>
-              <td><i class="fa fa-users gs-text-yellow gs-large"></i></td>
-              <td>New record, over 40 users.</td>
-              <td><i>17 mins</i></td>
-            </tr>
-            <tr>
-              <td><i class="fa fa-comment gs-text-red gs-large"></i></td>
-              <td>New comments.</td>
-              <td><i>25 mins</i></td>
-            </tr>
-            <tr>
-              <td><i class="fa fa-bookmark gs-text-blue gs-large"></i></td>
-              <td>Check transactions.</td>
-              <td><i>28 mins</i></td>
-            </tr>
-            <tr>
-              <td><i class="fa fa-laptop gs-text-red gs-large"></i></td>
-              <td>CPU overload.</td>
-              <td><i>35 mins</i></td>
-            </tr>
-            <tr>
-              <td><i class="fa fa-share-alt gs-text-green gs-large"></i></td>
-              <td>New shares.</td>
-              <td><i>39 mins</i></td>
-            </tr>
+            <?=implode(" ", $revenueTableData)?>
           </table>
         </div>
     </div>
-    <hr>
 
-
-
-
-
-    <script type="text/javascript">
-    function dairlyReport() {
-      var dataPoints = [];
-      var stockChart = new CanvasJS.StockChart("stockChartContainer",{
-        theme: "light4",
-        colorSet: "colorSet2",
-        exportEnabled: true, //false
-        title:{ text:"Monthly Income Chart" },
-        charts: [{
-          axisX: { crosshair: { enabled: true } },
-          axisY: {
-            prefix: "LKR ",
-            suffix: "K",
-            title: "Orders Revenue in LKR",
-            titleFontSize: 16
-          },
-          data: [{
-            type: "area",
-            xValueFormatString: "DD MMM YYYY",
-            yValueFormatString: "LKR #,###.##M",
-            dataPoints : dataPoints
-          }]
-        }],
-        navigator: {
-          slider: {
-            minimum: new Date(2018, 03, 01),
-            maximum: new Date(2018, 05, 01)
-          }
-        }
-      });
-      $.getJSON("sales.json", function(data) {
-        for(var i = 0; i < data.length; i++){
-          dataPoints.push({x: new Date(data[i].date), y: Number(data[i].sale)});
-        }
-        stockChart.render();
-      });
-    }
-    </script>
-
-    <div id="stockChartContainer" style="height: 600px; max-width: 95%; margin: 0px auto;"></div>
-    <br>
-
-
-
-
-
-  <style>
-  canvas {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-  }
-  .chart-container {
-    width: 500px;
-    margin-left: 40px;
-    margin-right: 40px;
-    margin-bottom: 40px;
-  }
-  .container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  </style>
-
-  <div class="container">
-  </div>
-
-    <script type="text/javascript">
-
-    function onLoadDairlyReport() {
-      var dataPoints = [];
-      var stockChart = new CanvasJS.StockChart("stockChartContainer",{
-        theme: "light4",
-        colorSet: "colorSet2",
-        exportEnabled: true, //false
-        title:{ text:"Monthly Income Chart" },
-        charts: [{
-          axisX: { crosshair: { enabled: true } },
-          axisY: {
-            prefix: "LKR ",
-            suffix: "K",
-            title: "Orders Revenue in LKR",
-            titleFontSize: 16
-          },
-          data: [{
-            type: "area",
-            xValueFormatString: "DD MMM YYYY",
-            yValueFormatString: "LKR #,###.##M",
-            dataPoints : dataPoints
-          }]
-        }],
-        navigator: {
-          slider: {
-            minimum: new Date(2018, 03, 01),
-            maximum: new Date(2018, 05, 01)
-          }
-        }
-      });
-      $.getJSON("sales.json", function(data) {
-        for(var i = 0; i < data.length; i++){
-          dataPoints.push({x: new Date(data[i].date), y: Number(data[i].sale)});
-        }
-        stockChart.render();
-      });
-    }
-
-    function createConfig(mode, intersect) {
-      return {
-        type: 'line',
-        data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'My First dataset',
-            borderColor: window.chartColors.red,
-            backgroundColor: window.chartColors.red,
-            data: [10, 30, 46, 2, 8, 50, 0],
-            fill: false,
-          }, {
-            label: 'My Second dataset',
-            borderColor: window.chartColors.blue,
-            backgroundColor: window.chartColors.blue,
-            data: [7, 49, 46, 13, 25, 30, 22],
-            fill: false,
-          }]
-        },
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            text: 'Mode: ' + mode + ', intersect = ' + intersect
-          },
-          tooltips: {
-            mode: mode,
-            intersect: intersect,
-          },
-          hover: {
-            mode: mode,
-            intersect: intersect
-          },
-        }
-      };
-    }
-
-    function onLoadReportTables() {
-      var container = document.querySelector('.container');
-
-      [{
-        mode: 'index',
-        intersect: true,
-      }, {
-        mode: 'index',
-        intersect: false,
-      }, {
-        mode: 'dataset',
-        intersect: true,
-      }, {
-        mode: 'dataset',
-        intersect: false,
-      }, {
-        mode: 'point',
-        intersect: true,
-      }, {
-        mode: 'point',
-        intersect: false,
-      }, {
-        mode: 'nearest',
-        intersect: true,
-      }, {
-        mode: 'nearest',
-        intersect: false,
-      }, {
-        mode: 'x',
-        intersect: true
-      }, {
-        mode: 'x',
-        intersect: false
-      }, {
-        mode: 'y',
-        intersect: true
-      }, {
-        mode: 'y',
-        intersect: false
-      }].forEach(function(details) {
-        var div = document.createElement('div');
-        div.classList.add('chart-container');
-
-        var canvas = document.createElement('canvas');
-        div.appendChild(canvas);
-        container.appendChild(div);
-
-        var ctx = canvas.getContext('2d');
-        var config = createConfig(details.mode, details.intersect);
-        new Chart(ctx, config);
-      });
-    }
-
-    window.onload = function() {
-      loadPie();
-      onLoadDairlyReport();
-      onLoadReportTables();
-    };
-  </script>
-
+    <div class="gs-row-padding gs-margin-bottom" style="padding:32px">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand">
+            <div class=""></div>
+          </div>
+        </div>
+        <canvas id="chart-line" style="display: block; width: 100%;" class="chartjs-render-monitor"></canvas>
+    </div>
 
     <div class='gs-container gs-padding-16 gs-card' style='background-color:#eee'>
     <h3 class='gs-center'>Grocery Shop Web Application</h3>
@@ -442,3 +159,98 @@
     All Rights Reserved.</p>
   </footer>
 </div>
+<script>
+	Chart.defaults.global.tooltips.custom = function(tooltip) {
+	    var tooltipEl = document.getElementById('chartjspie-tooltip');
+	    if (tooltip.opacity === 0) { tooltipEl.style.opacity = 0; return; }
+	    tooltipEl.classList.remove('above', 'below', 'no-transform');
+	    if (tooltip.yAlign) { tooltipEl.classList.add(tooltip.yAlign); }
+	    else { tooltipEl.classList.add('no-transform'); }
+	    function getBody(bodyItem) { return bodyItem.lines;  }
+	    if (tooltip.body) {
+		      var titleLines = tooltip.title || [];
+		      var bodyLines = tooltip.body.map(getBody);
+		      var innerHtml = '<thead>';
+		      titleLines.forEach(function(title) {
+		        innerHtml += '<tr><th>' + title + '</th></tr>';
+		      });
+		      innerHtml += '</thead><tbody>';
+		      bodyLines.forEach(function(body, i) {
+		        var colors = tooltip.labelColors[i];
+		        var style = 'background:' + colors.backgroundColor;
+		        style += '; border-color:' + colors.borderColor;
+		        style += '; border-width: 2px';
+		        var span = '<span class="chartjspie-tooltip-key" style="' + style + '"></span>';
+		        innerHtml += '<tr><td>' + span + body + '</td></tr>';
+		      });
+		      innerHtml += '</tbody>';
+		      var tableRoot = tooltipEl.querySelector('table');
+		      tableRoot.innerHTML = innerHtml;
+	    }
+	    var positionY = this._chart.canvas.offsetTop;
+	    var positionX = this._chart.canvas.offsetLeft;
+	    tooltipEl.style.opacity = 1;
+	    tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+	    tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+	    tooltipEl.style.fontFamily = tooltip._bodyFontFamily;
+	    tooltipEl.style.fontSize = tooltip.bodyFontSize;
+	    tooltipEl.style.fontStyle = tooltip._bodyFontStyle;
+	    tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+	};
+	var configPie = {
+		type: 'pie',
+		data: {
+		  datasets: [{
+		    data: [<?=implode(",",$pieChartData)?>], backgroundColor: [<?=implode(",",$revenueTableColors)?>] }],
+		    labels: [<?=implode(",",$CategoryNames)?>]
+		},
+		options: {
+		  responsive: true,
+		  legend: { display: false },
+		  tooltips: { enabled: false }
+		}
+	};
+	var configGraph = {
+		type: 'line',
+		data: {
+			  labels: [<?=implode(",",$OrderLabelArry)?>],
+			  datasets: [
+			  {
+			    label: 'CASH PAYMENT',
+			    fill: true,
+			    backgroundColor: window.chartColors.green,
+			    data: [<?=implode(",",$OrderCashArry)?>]
+			  }, 
+			  {
+			    label: 'VISA PAYMENT',
+			    fill: false,
+			    backgroundColor: window.chartColors.blue,
+			    borderColor: window.chartColors.blue,
+			    data: [<?=implode(",",$OrderVisaArry)?>]
+			  }, 
+			  {
+			    label: 'MASTER PAYMENT',
+			    fill: false,
+			    backgroundColor: window.chartColors.red,
+			    borderColor: window.chartColors.red,
+			    data: [<?=implode(",",$OrderMasterArry)?>]
+			  }]
+		},
+		options: {
+			  responsive: true,
+			  title: {
+			    display: true,
+			    text: 'DAILY TOTAL PAYMENT GRAPH'
+			  },
+			  scales: { yAxes: [{ ticks: { callback: function(label, index, values) { return 'LKR ' +values[index]+'.00'; } } }] } 
+		}
+	};
+	window.onload = function() {
+		var pieChart = document.getElementById('chart-area').getContext('2d');
+		var lineChart = document.getElementById('chart-line').getContext('2d');
+		window.myPie = new Chart(pieChart, configPie);
+		Chart.defaults.global.tooltips.enabled = false;
+		window.myLine = new Chart(lineChart, configGraph);
+	};
+</script>
+

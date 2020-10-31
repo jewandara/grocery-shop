@@ -10,8 +10,8 @@
       </form>
       <?=($ERROR_MESSAGE != '')?$ERROR_MESSAGE:''?>
       <div class='option'>
-        <a class='left tooltip-bottom' href='<?=$_DOMAIN?>register' data-tooltip='Please click this link for new user .' >New Register</a>
-        <a class='right tooltip-bottom' href='<?=$_DOMAIN?>forgot_password' data-tooltip='Please click this link to find your forgotten password.'>Forgot Password</a>
+       <!--  <a class='left tooltip-bottom' href='<?=$_DOMAIN?>register' data-tooltip='Please click this link for new user .' >New Register</a> -->
+        <a class='left tooltip-bottom' href='<?=$_DOMAIN?>forgot_password' data-tooltip='Please click this link to find your forgotten password.'>Forgot Password ?</a>
       </div>
     </div>
     <ul class='bg-bubbles'>

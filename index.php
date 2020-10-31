@@ -39,7 +39,7 @@ else {
 	switch ($_URL[$_PATH_ARRY_COUNT]) {
 		case '': require_once($_FOLDER.'web/login.php'); break;
 		case 'login': require_once($_FOLDER.'web/login.php'); break;
-		case 'register': require_once($_FOLDER.'web/register.php'); break;
+		//case 'register': require_once($_FOLDER.'web/register.php'); break;
 		case 'forgot_password': require_once($_FOLDER.'web/forgot_password.php'); break;
 		case 'reset_password': require_once($_FOLDER.'web/reset_password.php'); break;
 		case 'resend_activation': require_once($_FOLDER.'web/resend_activation.php'); break;

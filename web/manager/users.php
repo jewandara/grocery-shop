@@ -1,6 +1,7 @@
 <?php
   securePage($_SERVER['PHP_SELF']); 
-  require_once($_FOLDER.'web/popup/add.new.item.php');
+  require_once($_FOLDER.'web/popup/add.user.php');
+  require_once($_FOLDER.'web/popup/update.user.php');
 ?>
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
@@ -17,27 +18,29 @@
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-users"></i>  User Grid View</b></h5>
       <header class='gs-container' style='padding-top:22px; padding-bottom:20px'>
         <p class='gs-grid-button-add-new'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' id='popupButton'> <i class='fa fa-plus'></i> Add New</button>
+          <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' onclick='addNewUser()'> <i class='fa fa-plus'></i> Add New</button>
         </p>
         <p class='gs-grid-button-download-excel'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-black'><i class='fa fa-download'></i> Download Excel</button>
+          <button class='gs-button-gird gs-button gs-light-grey gs-hover-black' onclick='downloadToExcel()' ><i class='fa fa-download'></i> Download Excel</button>
         </p>
         <p class='gs-grid-button-search-by'>
-          <select class='gs-button-gird gs-button gs-light-grey gs-hover-grey' >
-            <option class='gs-hover-white' value="0">Search By</option>
-            <option class='gs-hover-white' value="Vegetables">Vegetables</option>
-            <option class='gs-hover-white' value="Fruits">Fruits</option>
-            <option class='gs-hover-white' value="Dairy">Dairy</option>
-            <option class='gs-hover-white' value="Foods">Foods</option>
-            <option class='gs-hover-white' value="Meats">Meats</option>
-            <option class='gs-hover-white' value="Beverages">Beverages</option>
-            <option class='gs-hover-white' value="Household">Household</option>
-            <option class='gs-hover-white' value="Baby">Baby</option>
-            <option class='gs-hover-white' value="Freezer">Freezer</option>
+          <select class='gs-button-gird gs-button gs-light-grey gs-hover-grey' id='dropdownGridSerchBy' onchange='serchByDropDown()'>
+            <option class='gs-hover-white' value="all">Search By Permissions</option>
+            <option class='gs-hover-white' value="User">User</option>
+            <option class='gs-hover-white' value="Manager">Manager</option>
+            <option class='gs-hover-white' value="Administrator">Administrator</option>
+            <option class='gs-hover-white' value="Other">Other</option>
           </select>
         </p>
       </header>
-
+      <style>
+      .label { color: white; padding: 4px; border-radius: 3px; font-family: Arial;}
+      .success {background-color: #4CAF50;} /* Green */
+      .info {background-color: #2196F3;} /* Blue */
+      .warning {background-color: #ff9800;} /* Orange */
+      .danger {background-color: #f44336;} /* Red */ 
+      .other {background-color: #e7e7e7; color: black;} /* Gray */ 
+      </style>
       <table id='users' class='display gs-grid-table' style='width:100%'>
         <thead>
           <tr>
@@ -84,17 +87,40 @@
   </footer>
 </div>
 <script type="text/javascript">
+  var dt;
+
+  function serchByDropDown() { 
+    search = document.getElementById("dropdownGridSerchBy").value;
+    dt.destroy();
+    loadGridItems(search);
+  }
+
+  function downloadToExcel() { 
+    tablesToExcel(['users'], ['Users_Sheet'], 'Users_Data.xls', 'Excel');
+  }
+
+  function addNewItem () {
+    loadPopUp("addNewUser");
+  }
+
+  function updateItem (id) {
+    loadPopUp("updateUser");
+    $("#recodeId").empty();
+    $("#recodeId").append(" "+id+"");
+    loadUpdateForm(id);
+  }
+
   function formatItems (d) {
   return 'Full name: '+d.name+' '+d.code+'<br>'+
       'Salary: '+d.position+'<br>'+
       'The child row can contain any data you wish, including links, images, inner tables etc.';
   }
 
-  function loadGridItems() {
-    var dt = $('#users').DataTable( {
+  function loadGridItems(search="all") {
+    dt = $('#users').DataTable( {
         "processing": true,
         "serverSide": true,
-        "ajax": { "url": "<?=$_DOMAIN?>api/grid/users/", "type": "POST" },
+        "ajax": { "url": "<?=$_DOMAIN?>api/grid/users/?search="+search, "type": "POST" },
         "columns": [
             { "class": "details-control", "orderable": false, "data": null, "defaultContent": "" },
             { "data": "title" },

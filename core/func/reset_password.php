@@ -1,89 +1,89 @@
 <?php 
 
-securePage($DOMAIN_CURRENT_PATH);
-
-if(isUserLoggedIn()) { header("Location: ".$DOMAIN_PATH."account"); die(); }
-
+securePage($_SERVER['PHP_SELF']);
+if(isUserLoggedIn()) { header("Location: ".$_DOMAIN."dashboard"); die(); }
 
 
 if(!empty($_GET["confirm"]))
 {
 	$token = trim($_GET["confirm"]);
-	if($token == "" || !validateActivationToken($token,TRUE)) { $errors[] = lang("FORGOTPASS_INVALID_TOKEN"); }
+	if($token == "" || !validateActivationToken($token,TRUE)) { $_ERRORS[] = lang("FORGOTPASS_INVALID_TOKEN"); }
 	else { $userdetails = fetchUserDetails(NULL,$token); }
 }
 
-//User has denied this request
+
 if(!empty($_GET["deny"]))
 {
 	$token = trim($_GET["deny"]);
 	if($token == "" || !validateActivationToken($token,TRUE))
-	{ $errors[] = lang("FORGOTPASS_INVALID_TOKEN"); }
+	{ $_ERRORS[] = lang("FORGOTPASS_INVALID_TOKEN"); }
 	else
 	{
 		$userdetails = fetchUserDetails(NULL,$token);
-		flagLostPasswordRequest($userdetails["user_name"],0);	
-		$successes[] = lang("FORGOTPASS_REQUEST_CANNED");
+		flagLostPasswordRequest($userdetails["username"],0);	
+		$_SUCCESS[] = lang("FORGOTPASS_REQUEST_CANNED");
 	}
 }
 
 
 
 
-//Forms posted
+
+
+
 if(!empty($_POST))
 {
 	if(!empty($_GET["confirm"]))
 	{
 		$token = trim($_GET["confirm"]);
 		
-		if($token == "" || !validateActivationToken($token,TRUE)) { $errors[] = lang("FORGOTPASS_INVALID_TOKEN"); }
+		if($token == "" || !validateActivationToken($token,TRUE)) { $_ERRORS[] = lang("FORGOTPASS_INVALID_TOKEN"); }
 		else
 		{
 			$password_new = $_POST["passwordc"];
 			$password_confirm = $_POST["passwordcheck"];
 			if ($password_new != "" OR $password_confirm != "")
 			{
-				if(trim($password_new) == "") { $errors[] = lang("ACCOUNT_SPECIFY_NEW_PASSWORD"); }
-				else if(trim($password_confirm) == "") { $errors[] = lang("ACCOUNT_SPECIFY_CONFIRM_PASSWORD"); }
-				else if(minMaxRange(8,50,$password_new)) { $errors[] = lang("ACCOUNT_NEW_PASSWORD_LENGTH",array(8,50)); }
-				else if($password_new != $password_confirm) { $errors[] = lang("ACCOUNT_PASS_MISMATCH"); }
+				if(trim($password_new) == "") { $_ERRORS[] = lang("ACCOUNT_SPECIFY_NEW_PASSWORD"); }
+				else if(trim($password_confirm) == "") { $_ERRORS[] = lang("ACCOUNT_SPECIFY_CONFIRM_PASSWORD"); }
+				else if(minMaxRange(8,50,$password_new)) { $_ERRORS[] = lang("ACCOUNT_NEW_PASSWORD_LENGTH",array(8,50)); }
+				else if($password_new != $password_confirm) { $_ERRORS[] = lang("ACCOUNT_PASS_MISMATCH"); }
 				
 				//End data validation
-				if(count($errors) == 0)
+				if(count($_ERRORS) == 0)
 				{
 					$secure_pass = generateHash($password_confirm);
 					$userdetails = fetchUserDetails(NULL,$token); 
-					$mail = new ha07MailClass();
-					$link_url = $DOMAIN_PATH."login";
+					$mail = new MailServer();
+					$link_url = $_DOMAIN."login";
 
 					$hooks = array( 
-						"searchStrs" => array("#DOMAIN#", "#LOGIN-URL#","#USERNAME#"), 
-						"subjectStrs" => array($DOMAIN_PATH, $link_url, $userdetails["display_name"])
+						"searchStrs" => array("#DOMAIN#", "#LOGIN-URL#","#FIRST#", "#LAST#", "#USERNAME#"), 
+						"subjectStrs" => array($_DOMAIN, $link_url, $userdetails["first_name"], $userdetails["last_name"], $userdetails["username"])
 					);
 				
-					if(!$mail->newTemplateMsg("reset_password.html",$hooks)) { $errors[] = lang("MAIL_TEMPLATE_BUILD_ERROR"); }
+					if(!$mail->newTemplateMsg("reset_password.html",$hooks)) { $_ERRORS[] = lang("MAIL_TEMPLATE_BUILD_ERROR"); }
 					else
 					{	
-						if(!$mail->sendMail($userdetails["email"],"SECURITY ALERT ! - HOLIDAY ACCOMMODATION AGENCY - NEW PASSWORD")) { $errors[] = lang("MAIL_ERROR"); }
+						if(!$mail->sendMail($userdetails["email"],"SECURITY ALERT ! - GROCERY SHOP - NEW PASSWORD")) { $_ERRORS[] = lang("MAIL_ERROR"); }
 						else
 						{
-							if(!updatePasswordFromToken($secure_pass,$token)) { $errors[] = lang("SQL_ERROR"); }
+							if(!updatePasswordFromToken($secure_pass,$token)) { $_ERRORS[] = lang("SQL_ERROR"); }
 							else
 							{	
-								flagLostPasswordRequest($userdetails["user_name"],0);
-								$successes[]  = lang("FORGOTPASS_NEW_PASS_EMAIL");
+								flagLostPasswordRequest($userdetails["username"],0);
+								$_SUCCESS[]  = lang("FORGOTPASS_NEW_PASS_EMAIL");
 							}
 						}
 					}
 				}
 			}
 		}
-	}
+	}else{ $_ERRORS[] = lang("FORGOTPASS_INVALID_TOKEN"); }
 }
 
 
 
-$ERROR_MESSAGE = resultBlock($errors,$successes);
+$ERROR_MESSAGE = resultBlock($_ERRORS,$_SUCCESS);
 
 ?>

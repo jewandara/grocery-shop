@@ -1,6 +1,7 @@
 <?php
   securePage($_SERVER['PHP_SELF']); 
-  require_once($_FOLDER.'web/popup/add.new.customer.php');
+  require_once($_FOLDER.'web/popup/add.customer.php');
+  require_once($_FOLDER.'web/popup/update.customer.php');
 ?>
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
@@ -20,11 +21,25 @@
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-smile-o"></i>  Customer Grid View</b></h5>
       <header class='gs-container' style='padding-top:22px; padding-bottom:20px'>
         <p class='gs-grid-button-add-new'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' id='popupButton'> <i class='fa fa-plus'></i> Add New</button>
+          <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' onclick='addNewCustomer()'> <i class='fa fa-plus'></i> Add New</button>
         </p>
         <p class='gs-grid-button-download-excel'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-black'><i class='fa fa-download'></i> Download Excel</button>
+          <button class='gs-button-gird gs-button gs-light-grey gs-hover-black' onclick='downloadToExcel()'><i class='fa fa-download'></i> Download Excel</button>
         </p>
+<!--         <p class='gs-grid-button-search-by'>
+          <select class='gs-button-gird gs-button gs-light-grey gs-hover-grey' id='dropdownGridSerchBy' onchange='serchByDropDown()'>
+            <option class='gs-hover-white' value="all">Search By All Category</option>
+            <option class='gs-hover-white' value="Vegetables">Vegetables</option>
+            <option class='gs-hover-white' value="Fruits">Fruits</option>
+            <option class='gs-hover-white' value="Dairy">Dairy</option>
+            <option class='gs-hover-white' value="Foods">Foods</option>
+            <option class='gs-hover-white' value="Meats">Meats</option>
+            <option class='gs-hover-white' value="Beverages">Beverages</option>
+            <option class='gs-hover-white' value="Household">Household</option>
+            <option class='gs-hover-white' value="Baby">Baby</option>
+            <option class='gs-hover-white' value="Freezer">Freezer</option>
+          </select>
+        </p> -->
       </header>
 
       <table id='customers' class='display gs-grid-table' style='width:100%'>
@@ -74,6 +89,12 @@
   </footer>
 </div>
 <script type="text/javascript">
+
+  function downloadToExcel() { 
+    tablesToExcel(['customers'], ['Customer_Sheet'], 'Customer_Data.xls', 'Excel');
+  }
+
+
   function formatCustomers (d) {
     return 'Full name: '+d.name+' '+d.code+'<br>'+
         'Salary: '+d.position+'<br>'+

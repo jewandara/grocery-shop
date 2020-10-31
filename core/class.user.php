@@ -28,15 +28,15 @@ class User
 		$this->contact = $contact;
 		if($type=="admin"){ 
 			$this->user_type = 3;
-			$this->user_type_name = "New Administrator";
+			$this->user_type_name = "Administrator";
 		}
 		else if($type=="manager"){ 
 			$this->user_type = 2;
-			$this->user_type_name = "New Manager";
+			$this->user_type_name = "Manager";
 		}
 		else {
 			$this->user_type = 1;
-			$this->user_type_name = "New User";
+			$this->user_type_name = "User";
 		}
 		$this->clean_email = sanitize($email);
 		$this->clean_password = trim($pass);
@@ -59,8 +59,8 @@ class User
 				$mail = new MailServer();
 				$activation_url = $_DOMAIN."activate_account/index.php?token=".$this->activation_token;
 				$hooks = array(
-					"searchStrs" => array("#WEBSITENAME#", "#ACTIVATION-URL#","#FIRST#","#LAST#","#USERNAME#"),
-					"subjectStrs" => array($CONFIG_DOMAIN, $activation_url, $this->first_name, $this->last_name, $this->username)
+					"searchStrs" => array("#WEBSITENAME#", "#ACTIVATION-URL#","#FIRST#","#LAST#","#USERNAME#", "#PASSWORD#"),
+					"subjectStrs" => array($CONFIG_DOMAIN, $activation_url, $this->first_name, $this->last_name, $this->username, $this->clean_password)
 				);
 				if(!$mail->newTemplateMsg("registration.html",$hooks)) { $this->mail_failure = true; }
 				else { if(!$mail->sendMail($this->clean_email,"Registration Confirmation")) { $this->mail_failure = true; } }

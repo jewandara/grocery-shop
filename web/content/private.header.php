@@ -52,15 +52,22 @@
     <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/dataTables.jqueryui.min.js"></script>
 
+    <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/jquery.tableExcel.js"></script>
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.12.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.12.0/additional-methods.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+
     <!--     
     <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/jszip.min.js"></script>
     <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/buttons.html5.min.js"></script>
     -->
+
     <script type="text/javascript" language="javascript" src='<?=$_DOMAIN?>js/Chart.min.js'></script>
     <script type="text/javascript" language="javascript" src='<?=$_DOMAIN?>js/utils.js'></script> 
 
-    <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/canvasjs.stock.min.js"></script>  
     <script type="text/javascript" language="javascript" src="<?=$_DOMAIN?>js/func.js"></script>  
 </head>
 <body>

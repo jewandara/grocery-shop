@@ -2,36 +2,44 @@
 
 securePage($_SERVER['PHP_SELF']);
 
-/*
-$pages = getPageFiles(); //Retrieve list of pages in root usercake folder
-$dbpages = fetchAllPages(); //Retrieve list of pages in pages table
+$pages = getPageFiles();
+$dbpages = fetchAllPages();
 $creations = array();
 $deletions = array();
-//Check if any pages exist which are not in DB
 foreach ($pages as $page){
 	if(!isset($dbpages[$page])){
 		$creations[] = $page;	
 	}
 }
-//Enter new pages in DB if found
-if (count($creations) > 0) {
-	createPages($creations)	;
-}
+
+if (count($creations) > 0) { createPages($creations)	; }
 if (count($dbpages) > 0){
-	//Check if DB contains pages that don't exist
 	foreach ($dbpages as $page){
-		if(!isset($pages[$page['page']])){
-			$deletions[] = $page['id'];	
-		}
+		if(!isset($pages[$page['page']])){ $deletions[] = $page['id'];	 }
 	}
 }
-//Delete pages from DB if not found
-if (count($deletions) > 0) {
-	deletePages($deletions);
-}
-//Update DB pages
+
+if (count($deletions) > 0) { deletePages($deletions); }
 $dbpages = fetchAllPages();
-*/
+
+$ERROR_MESSAGE = resultBlock($_ERRORS,$_SUCCESS);
+
+$_TR = "";
+
+foreach ($dbpages as $page){
+	$_TR.= "
+	<tr>
+	<td><b>".$page['id']."</b></td>
+	<td><a href='".$_DOMAIN."page/index.php?id=".$page['id']."'>/".$page['page']."</a></td>";
+	if($page['private']==0){ $_TR.= "<td><a class='btn btn-success'>Public</a></td>"; }
+	else{ $_TR.= "<td><a class='btn btn-danger'>Private</a></td>"; }
+	$_TR.= "
+	<td>
+	<a href='".$_DOMAIN."admin_page/index.php?id=".$page['id']."'><i class='fa fa-pencil-square-o'></i></a>
+	<a href='".$_DOMAIN.$page['page']."' target='_blank'><i class='fa fa-pencil-square-o'></i></a>
+	</td>
+	</tr>";
+}
 
 $ERROR_MESSAGE = resultBlock($_ERRORS,$_SUCCESS);
 

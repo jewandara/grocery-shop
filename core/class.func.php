@@ -5,49 +5,43 @@
 //Retrieve a list of all .php files in models/languages
 function getLanguageFiles()
 {
-	$directory = "languages/";
+	Global $_FOLDER;
+	$directory = $_FOLDER."core/languages/";
 	$languages = glob($directory . "*.php");
-	//print each file name
 	return $languages;
 }
 
 //Retrieve a list of all .css files in models/site-templates 
 function getTemplateFiles()
 {
-	$directory = "templates/";
+	Global $_FOLDER;
+	$directory = $_FOLDER."core/templates/";
 	$languages = glob($directory . "*.css");
-	//print each file name
 	return $languages;
 }
 
 //Retrieve a list of all .php files in root files folder
 function getPageFiles()
-{
-	$directory = "";
-
-	$pages = glob($directory."web/*.*");
+{   
+	Global $_FOLDER;
+	$pages = glob($_FOLDER."web/*.*");
 	foreach ($pages as $page){ $row[$page] = $page; }
-	$pages = glob($directory."web/pages/*.*");
+	$pages = glob($_FOLDER."web/admin/*.*");
 	foreach ($pages as $page){ $row[$page] = $page; }
-	$pages = glob($directory."web/users/*.*");
+	$pages = glob($_FOLDER."web/manager/*.*");
 	foreach ($pages as $page){ $row[$page] = $page; }
-	$pages = glob($directory."web/users/admin/*.*");
-	foreach ($pages as $page){ $row[$page] = $page; }
-	$pages = glob($directory."web/users/client/*.*");
-	foreach ($pages as $page){ $row[$page] = $page; }
-	$pages = glob($directory."web/users/member/*.*");
+	$pages = glob($_FOLDER."web/user/*.*");
 	foreach ($pages as $page){ $row[$page] = $page; }
 
 	foreach($row as $data){
-		$page_url = str_replace('.php', '', $data); 
+		$page_url = str_replace($_FOLDER, '', $data); 
+		$page_url = str_replace('.php', '', $page_url); 
 		$page_url = str_replace('.html', '', $page_url); 
 		$page_url = str_replace('.htm', '', $page_url); 
 		$page_url = str_replace('web/', '', $page_url); 
-		$page_url = str_replace('pages/', '', $page_url); 
-		$page_url = str_replace('users/', '', $page_url);
-		$page_url = str_replace('admin/', '', $page_url);
-		$page_url = str_replace('client/', '', $page_url);
-		$page_url = str_replace('member/', '', $page_url);
+		$page_url = str_replace('admin/', '', $page_url); 
+		$page_url = str_replace('manager/', '', $page_url);
+		$page_url = str_replace('user/', '', $page_url);
 		$RE[$page_url] = $page_url;
 	}
 	return $RE;
@@ -226,27 +220,15 @@ function emailExists($email)
 }
 
 //Check if a user name and email belong to the same user
-function emailUsernameLinked($email,$username)
+function emailUsernameLinked($email, $username)
 {
 	global $_SQL,$_PREFIX;
-	$stmt = $_SQL->prepare("SELECT active
-		FROM ".$_PREFIX."users
-		WHERE user_name = ?
-		AND
-		email = ?
-		LIMIT 1
-		");
+	$stmt = $_SQL->prepare("SELECT active FROM ".$_PREFIX."users WHERE username = ? AND email = ? LIMIT 1 ");
 	$stmt->bind_param("ss", $username, $email);	
 	$stmt->execute();
 	$stmt->store_result();
-	if ($stmt->num_rows > 0)
-	{
-		return true;
-	}
-	else
-	{
-		return false;	
-	}
+	if ($stmt->num_rows > 0) { return true; }
+	else { return false;	 }
 	$stmt->close();
 }
 
@@ -331,15 +313,10 @@ function fetchUserDetails($username=NULL, $token=NULL, $id=NULL)
 }
 
 //Toggle if lost password request flag on or off
-function flagLostPasswordRequest($username,$value)
+function flagLostPasswordRequest($username, $value)
 {
 	global $_SQL,$_PREFIX;
-	$stmt = $_SQL->prepare("UPDATE ".$_PREFIX."users
-		SET lost_password_request = ?
-		WHERE
-		user_name = ?
-		LIMIT 1
-		");
+	$stmt = $_SQL->prepare("UPDATE ".$_PREFIX."users SET lost_password_request = ? WHERE username = ? LIMIT 1 ");
 	$stmt->bind_param("ss", $value, $username);
 	return $stmt->execute();
 	$stmt->close();

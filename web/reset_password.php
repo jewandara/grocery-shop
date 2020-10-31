@@ -1,128 +1,95 @@
-
+<div class='content'>
+    <div class='wrapper'>
+        <div class='container'>
+            <img alt='Grocery Shop Dashboard Text Logo' src='<?=$_DOMAIN?>images/text-logo-400.png'>
 
 <?php if(!empty($_GET["deny"])) { ?>
-    <section class="hero-section" style="margin-top: -100px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-3"></div>
-                <div class="col-xl-6">
-                    <div class="login-form" >
-                        <span>Holiday Accommodation Agency</span>
-                        <h4>Reset Password ?</h4>
-                        <br>
-                        <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
-                    </div>                            <br><br>
-                    <a href="<?=$DOMAIN_PATH?>login" class="primary-btn" style="color: #19191a;">Login ?</a>
-                </div>
-                <div class="col-xl-3"></div>
+    <div class="row">
+        <div class="col-xl-3"></div>
+        <div class="col-xl-6">
+            <div class="login-form" >
+                <h4>Deny Reset Password ?</h4>
             </div>
         </div>
-    </section>
-
+        <div class="col-xl-3"></div>
+    </div>
 <?php } else { 
      if(!empty($_GET["reset"])) { ?>
-
-    <section class="hero-section" style="margin-top: -100px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-3"></div>
-                <div class="col-xl-6">
-                    <div class="login-form" >
-                        <span>Holiday Accommodation Agency</span>
-                        <h4>Forgot Password ?</h4>
-                        <br>
-                        <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
-                    </div>                            <br><br>
-                    <a href="<?=$DOMAIN_PATH?>login" class="primary-btn" style="color: #19191a;">Login ?</a>
+        <div class="row">
+            <div class="col-xl-3"></div>
+            <div class="col-xl-6">
+                <div class="login-form" >
+                    <h4>Forgot Password ?</h4>
                 </div>
-                <div class="col-xl-3"></div>
             </div>
+            <div class="col-xl-3"></div>
         </div>
-    </section>
-
 <?php } else { 
     if(!empty($_GET["confirm"])) {
         if($ERROR_MESSAGE != ""){ ?>
-
-            <section class="hero-section" style="margin-top: -100px;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-3"></div>
-                        <div class="col-xl-6">
-                            <div class="login-form" >
-                                <span>Holiday Accommodation Agency</span>
-                                <h3>Invalid Reset Password Request</h3>
-                                <br>
-                                <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
-                            </div>
-                            <a href="<?=$DOMAIN_PATH?>login" class="primary-btn" style="color: #19191a;">Login ?</a>
-                        </div>
-                        <div class="col-xl-3"></div>
+            <div class="row">
+                <div class="col-xl-3"></div>
+                <div class="col-xl-6">
+                    <div class="login-form" >
+                        <h3>Invalid Reset Password Request</h3>
                     </div>
                 </div>
-            </section>
-
+                <div class="col-xl-3"></div>
+            </div>
 <?php } else{  ?>
-
-            <section class="hero-section" style="margin-top: -100px;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-3"></div>
-                        <div class="col-xl-6">
-                            <div class="login-form" >
-                                <span>Holiday Accommodation Agency</span>
-                                <h4><?=$userdetails["display_name"]?> : Reset Password ?</h4>
-                                <br>
-                                <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
-
-                                <form name='forgot_password' action='<?=$DOMAIN_CURRENT_PATH?>&reset=done' method='post' >
-                                    <div class="input-text">
-                                        <label for="username">Username :</label>
-                                        <input type='text' readonly='true' name='username' class="form-control" value='<?=$userdetails["user_name"]?>' >
-                                        <i class="icon_profile"></i>
-                                    </div>
-                                    <div class="input-text">
-                                        <label for="passwordc">New Password : </label>
-                                        <input type='password' name='passwordc' placeholder='Type your new password here' class="form-control" >
-                                        <i class="icon_lock"></i>
-                                    </div>
-                                    <div class="input-text">
-                                        <label for="passwordcheck">New Confirm password : </label>
-                                        <input type='password' name='passwordcheck' placeholder='Retype new confirm password here' class="form-control" >
-                                        <i class="icon_lock"></i>
-                                    </div>
-
-                                    <button type="submit" class="col-lg-12 bk-btn">RESET PASSWORD</button>
-                                    <br>
-                                    <a href="<?=$DOMAIN_PATH?>login" class="primary-btn" style="color: #19191a;">Login ?</a>
-                                </form>
-
-
-                            </div>
+        <div class="row">
+            <div class="col-xl-3"></div>
+            <div class="col-xl-6">
+                <div class="login-form" >
+                    <h4><b>Hellow <?=$userdetails["first_name"]." ".$userdetails["last_name"]?> !</b></h4>
+                    <form name='forgot_password' action='<?=$_DOMAIN?>reset_password/?confirm=<?=$_GET["confirm"]?>&reset=done' method='post' >
+                        <div class="input-text">
+                            <label for="username">Username :</label>
+                            <input type='text' readonly='true' name='username' class="form-control" value='<?=$userdetails["username"]?>' >
+                            <i class="icon_profile"></i>
                         </div>
-                        <div class="col-xl-3"></div>
-                    </div>
-                </div>
-            </section>
-
-<?php } } else { ?>
-
-        <section class="hero-section" style="margin-top: -100px;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-3"></div>
-                    <div class="col-xl-6">
-                        <div class="login-form" >
-                            <span>Holiday Accommodation Agency</span>
-                            <h3>Invalid Reset Password Request</h3>
-                            <br>
-                            <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
+                        <div class="input-text">
+                            <label for="passwordc">New Password : </label>
+                            <input type='password' name='passwordc' placeholder='Type new password' class="form-control" >
+                            <i class="icon_lock"></i>
                         </div>
-                        <a href="<?=$DOMAIN_PATH?>login" class="primary-btn" style="color: #19191a;">Login ?</a>
-                    </div>
-                    <div class="col-xl-3"></div>
+                        <div class="input-text">
+                            <label for="passwordcheck">New Confirm password : </label>
+                            <input type='password' name='passwordcheck' placeholder='Retype new password' class="form-control" >
+                            <i class="icon_lock"></i>
+                        </div>
+
+                        <button type="submit" class="col-lg-12 bk-btn">RESET PASSWORD</button>
+                    </form>
                 </div>
             </div>
-        </section>
-
+            <div class="col-xl-3"></div>
+        </div>
+<?php } } else { ?>
+        <div class="row">
+            <div class="col-xl-3"></div>
+            <div class="col-xl-6">
+                <div class="login-form" >
+                    <h3>Invalid Reset Password Request</h3>
+                </div>
+            </div>
+            <div class="col-xl-3"></div>
+        </div>
 <?php } } } ?>
+
+
+            <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
+            <div class='option'>
+              <!-- <a class='left tooltip-bottom' href='<?=$_DOMAIN?>resend_activation' data-tooltip='Please click this link to re-send your activation code.' >Resend Activation</a> -->
+              <a class='left tooltip-bottom' href='<?=$_DOMAIN?>login' data-tooltip='Please click this link to login to your account.'>Login</a>
+            </div>
+        </div>
+        <ul class='bg-bubbles'>
+            <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li>
+            <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+  window.onload = function() { loadBubbles(); };
+</script>

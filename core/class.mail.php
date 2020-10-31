@@ -30,7 +30,7 @@ class MailServer {
 	    $mail = new PHPMailer\PHPMailer\PHPMailer();
 	    try {
 	        $mail->isSMTP();
-	        $mail->SMTPDebug  = 1; 
+	        $mail->SMTPDebug  = 0; 
 	        $mail->SMTPAuth   = true;
 	        $mail->SMTPSecure = 'ssl';
 	        $mail->Port       =  465;

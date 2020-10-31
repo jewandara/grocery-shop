@@ -5,8 +5,8 @@
             <h4>Activate Account</h4>
             <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
             <div class='option'>
-              <a class='left tooltip-bottom' href='./resend_activation' data-tooltip='Please click this link to re-send your activation code.' >Resend Activation</a>
-              <a class='right tooltip-bottom' href='./login' data-tooltip='Please click this link to login to your account.'>Login</a>
+              <!-- <a class='left tooltip-bottom' href='<?=$_DOMAIN?>resend_activation' data-tooltip='Please click this link to re-send your activation code.' >Resend Activation</a> -->
+              <a class='left tooltip-bottom' href='<?=$_DOMAIN?>login' data-tooltip='Please click this link to login to your account.'>Login</a>
             </div>
         </div>
         <ul class='bg-bubbles'>

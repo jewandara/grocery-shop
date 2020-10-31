@@ -45,7 +45,7 @@
 
 <?php
   securePage($_SERVER['PHP_SELF']); 
-  require_once($_FOLDER.'web/popup/add.new.permission.php');
+  //require_once($_FOLDER.'web/popup/add.new.permission.php');
 ?>
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
@@ -63,6 +63,7 @@
   <div class='gs-container' style='padding:32px'>
     <div class='gs-row-padding gs-margin-bottom'>
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-unlock-alt"></i>  Permission Grid View</b></h5>
+      <!--       
       <header class='gs-container' style='padding-top:22px; padding-bottom:20px'>
         <p class='gs-grid-button-add-new'>
           <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' id='popupButton'> <i class='fa fa-plus'></i> Add New</button>
@@ -85,19 +86,48 @@
           </select>
         </p>
       </header>
-
-      <table id='permissions' class='display gs-grid-table' style='width:100%'>
+      -->
+      <style>
+        table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }
+        th { border: 1px solid #000; background-color:#000; text-align: left; padding: 8px; color:#fff; }
+        td, th { border: 1px solid #000; text-align: left; padding: 8px;}
+        tr:nth-child(even) { background-color: #dddddd; }
+        .checkbox { height: 25px; width: 25px; background-color: #8639bf; }
+        input[type=submit] { text-decoration: none; padding: 8px 16px; color: white; border-radius: 3px;  border: 0px solid #ccc; }
+        input[type=submit]:hover { background-color: #333; }
+        .green{ background-color: #4CAF50; }
+        .red{ background-color: #bf394f; }
+      </style>
+      <br>
+      <br>
+      <br>
+      <label><u>Add A New User Permission Name :</u></label><br><br>
+      <input type='text' name='newPermission' style="padding:6px; margin-right: 10px;" /> 
+      <input type='submit' name='Submit' value='ADD NEW PERMISSION' class='green'/>
+      <br><br>
+      <table id='permissions' style='width:100%'>
         <thead>
           <tr>
-              <th></th>
-              <th>First name</th>
+              <th width='10px'><i class='fa fa-address-card-o gs-xlarge'></i></th>
               <th>Last name</th>
-              <th>Position</th>
-              <th>Office</th>
+              <th width='10px'><i class="fa fa-braille gs-xlarge"></i></th>
           </tr>
         </thead>
+        <tbody>
+                <?php
+                  foreach ($permissionData as $v1) {
+                    echo "
+                    <tr>
+                      <td><input type='checkbox' class='checkbox' name='delete[".$v1['id']."]' id='delete[".$v1['id']."]' value='".$v1['id']."'></td>
+                      <td><a href='".$_DOMAIN."admin_permission/index.php?id=".$v1['id']."'>[ ".$v1['id']." ] ".$v1['name']."</a></td>
+                      <td><a href='".$_DOMAIN."admin_permission/index.php?id=".$v1['id']."'><i class='fa fa-pencil-square-o'></i></a></td>
+                    </tr>";
+                  }
+                ?>
+        </tbody>
       </table>
-
+      <br>
+      <input type='submit' name='Submit' value='DELETE SELECTED' class='red'/>
     </div>
     <hr>
   </div>

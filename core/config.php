@@ -6,7 +6,6 @@ require_once(dirname(__FILE__).'/class.sql.php');
 require_once(dirname(__FILE__).'/class.func.php');
 require_once(dirname(__FILE__).'/class.mail.php');
 require_once(dirname(__FILE__).'/class.user.php');
-require_once(dirname(__FILE__).'/class.func.php');
 
 
 $stmt = $_SQL->prepare('SELECT id, name, value FROM '.$_PREFIX.'configuration');	
@@ -100,7 +99,7 @@ if(isUserLoggedIn()) {
 else{
 	switch ($_URL[$_PATH_ARRY_COUNT]) {
 		case 'login': require_once($_FOLDER.'core/func/login.php'); break;
-		case 'register': require_once($_FOLDER.'core/func/register.php'); break;
+		//case 'register': require_once($_FOLDER.'core/func/register.php'); break;
 		case 'forgot_password': require_once($_FOLDER.'core/func/forgot_password.php'); break;
 		case 'reset_password': require_once($_FOLDER.'core/func/reset_password.php'); break;
 		case 'resend_activation': require_once($_FOLDER.'core/func/resend_activation.php'); break;

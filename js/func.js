@@ -50,11 +50,9 @@ function contactNumberViewInUsername() {
 }
 
 /* Loading popup window */
-function loadPopUp(){
-  $("#popupButton").click(function(){
-      $(".gs-popup-window").css("display", "block");
-      $("body").css("overflow", "hidden !mportant");
-  });
+function loadPopUp(windowNameId){
+  $("#"+windowNameId).css("display", "block");
+  $("body").css("overflow", "hidden !mportant");
   $(".gs-popup-close").click(function(){
       $(".gs-popup-window").css("display", "none");
       $("body").css("overflow", "scroll !mportant");
@@ -63,8 +61,12 @@ function loadPopUp(){
 
 /* Close popup window */
 function windowOnClickClosePopUp(){
-  if (event.target == document.getElementsByClassName("gs-popup-window")[0]) 
-    { $(".gs-popup-window").css("display", "none"); } 
+  if (event.target == document.getElementsByClassName("gs-popup-window")[0]) { $(".gs-popup-window").css("display", "none"); } 
+  if (event.target == document.getElementsByClassName("gs-popup-window")[1]) { $(".gs-popup-window").css("display", "none"); } 
+  if (event.target == document.getElementsByClassName("gs-popup-window")[2]) { $(".gs-popup-window").css("display", "none"); } 
+  if (event.target == document.getElementsByClassName("gs-popup-window")[3]) { $(".gs-popup-window").css("display", "none"); } 
+  if (event.target == document.getElementsByClassName("gs-popup-window")[4]) { $(".gs-popup-window").css("display", "none"); } 
+  if (event.target == document.getElementsByClassName("gs-popup-window")[5]) { $(".gs-popup-window").css("display", "none"); } 
 }
 
 /* Message Alert Close Button */

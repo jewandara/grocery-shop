@@ -1,19 +1,18 @@
-<?php 
+<?php
+	function randCodePass( $length ) {
+	    $chars = "!@#$&*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&*";
+	    return substr(str_shuffle($chars),0,$length);
+	}
 
-securePage($_SERVER['PHP_SELF']);
-if(isUserLoggedIn()) { header("Location: ".$_DOMAIN."dashboard"); die(); }
+	$_PASS = randCodePass(10);
+	$username = trim($_JSON["username"]);
+	$contact = trim($_JSON["contact"]);
+	$password = trim($_PASS);
+	$pass_confirm = trim($_PASS);
+	$firstname = trim($_JSON["first_name"]);
+	$lastname = trim($_JSON["last_name"]);
+	$email = trim($_JSON["email"]);
 
-if(!empty($_POST))
-{
-	$_ERRORS = array();
-	$firstname = trim($_POST["firstname"]);
-	$lastname = trim($_POST["lastname"]);
-	$contact = trim($_POST["contact"]);
-	$username = trim($_POST["username"]);
-	$password = trim($_POST["password"]);
-	$pass_confirm = trim($_POST["pass_confirm"]);
-	$email = trim($_POST["email"]);
-	$captcha = md5(strtolower($_POST["captcha"]));
 	
 	$valid_chars = array('-', '_', ' ', '.');
 	if($firstname=="") { $_ERRORS[] = lang("EMPTY_STRING_CHAR_LIMIT", array("First name")); }
@@ -33,7 +32,7 @@ if(!empty($_POST))
 		}
 	}
 
-	if ($captcha != $_SESSION['captcha']) { $_ERRORS[] = lang("CAPTCHA_FAIL"); }
+	//if ($captcha != $_SESSION['captcha']) { $_ERRORS[] = lang("CAPTCHA_FAIL"); }
 	if($username=="") { $_ERRORS[] = lang("EMPTY_STRING_CHAR_LIMIT", array("Contact number")); }
 	else{ if(minMaxRange(7,15, $username)) { $_ERRORS[] = lang("ACCOUNT_USER_CHAR_LIMIT",array(7,15)); } }
 
@@ -50,7 +49,7 @@ if(!empty($_POST))
 		if(!$user->status)
 		{
 			if($user->username_taken) $_ERRORS[] = lang("ACCOUNT_USERNAME_IN_USE",array($username));
-			if($user->contact_taken) $_ERRORS[] = lang("ACCOUNT_DISPLAYNAME_IN_USE",array($contact));
+			if($user->contact_taken) $_ERRORS[] = lang("ACCOUNT_CONTACT_IN_USE",array($contact));
 			if($user->email_taken) 	  $_ERRORS[] = lang("ACCOUNT_EMAIL_IN_USE",array($email));		
 		}
 		else
@@ -61,10 +60,29 @@ if(!empty($_POST))
 				if($user->sql_failure)  $_ERRORS[] = lang("SQL_ERROR");
 			}
 		}
+
 	}
-	if(count($_ERRORS) == 0) { $_SUCCESS[] = $user->success; }
-}
 
-$ERROR_MESSAGE = resultBlock($_ERRORS, $_SUCCESS);
 
-?>
+
+	if(count($_ERRORS) == 0) { 
+		$_SUCCESS[] = $user->success; 
+		$_RESULT = new stdClass();
+		$_RESULT->error = false;
+		$_RESULT->message = "success";
+		$_RESULT->result = $_SUCCESS;
+		echo json_encode($_RESULT);
+	}
+	else{
+		$_RESULT = new stdClass();
+		$_RESULT->error = true;
+		$_RESULT->message = "error";
+		$_RESULT->result = $_ERRORS;
+		echo json_encode($_RESULT);
+	}
+
+
+
+
+
+

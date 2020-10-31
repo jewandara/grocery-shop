@@ -1,87 +1,47 @@
 <?php 
 
-securePage($DOMAIN_CURRENT_PATH);
+securePage($_CURRENT_PATH);
+if(isUserLoggedIn()) { header("Location: ".$_DOMAIN."dashboard"); die(); }
 
-if(isUserLoggedIn()) { header("Location: ".$DOMAIN_PATH."account"); die(); }
 
-
-//Forms posted
 if(!empty($_POST))
 {
 	$email = $_POST["email"];
 	$username = sanitize($_POST["username"]);
+
+	if(trim($email) == "") { $_ERRORS[] = lang("ACCOUNT_SPECIFY_EMAIL"); }
+	else if(!isValidEmail($email) || !emailExists($email)) { $_ERRORS[] = lang("ACCOUNT_INVALID_EMAIL"); }
 	
-	//Perform some validation
-	//Feel free to edit / change as required
+	if(trim($username) == "") { $_ERRORS[] = lang("ACCOUNT_SPECIFY_USERNAME"); }
+	else if(!usernameExists($username)) { $_ERRORS[] = lang("ACCOUNT_INVALID_USERNAME"); }
 	
-	if(trim($email) == "")
+	if(count($_ERRORS) == 0)
 	{
-		$errors[] = lang("ACCOUNT_SPECIFY_EMAIL");
-	}
-	//Check to ensure email is in the correct format / in the db
-	else if(!isValidEmail($email) || !emailExists($email))
-	{
-		$errors[] = lang("ACCOUNT_INVALID_EMAIL");
-	}
-	
-	if(trim($username) == "")
-	{
-		$errors[] = lang("ACCOUNT_SPECIFY_USERNAME");
-	}
-	else if(!usernameExists($username))
-	{
-		$errors[] = lang("ACCOUNT_INVALID_USERNAME");
-	}
-	
-	if(count($errors) == 0)
-	{
-		
-		//Check that the username / email are associated to the same account
-		if(!emailUsernameLinked($email,$username))
-		{
-			$errors[] =  lang("ACCOUNT_USER_OR_EMAIL_INVALID");
-		}
+		if(!emailUsernameLinked($email,$username)) { $_ERRORS[] =  lang("ACCOUNT_USER_OR_EMAIL_INVALID"); }
 		else
 		{
-			//Check if the user has any outstanding lost password requests
 			$userdetails = fetchUserDetails($username);
-			if($userdetails["lost_password_request"] == 1)
-			{
-				$errors[] = lang("FORGOTPASS_REQUEST_EXISTS");
-			}
+			if($userdetails["lost_password_request"] == 1) { $_ERRORS[] = lang("FORGOTPASS_REQUEST_EXISTS"); }
 			else
 			{
-				//Email the user asking to confirm this change password request
-				//We can use the template builder here
+				$date = previousDay(0);
+				$mail = new MailServer();
+				$confirm_url = $_DOMAIN."reset_password/index.php?confirm=".$userdetails["activation_token"];
+				$deny_url = $_DOMAIN."reset_password/index.php?deny=".$userdetails["activation_token"];
 				
-				//We use the activation token again for the url key it gets regenerated everytime it's used.
-				
-				$mail = new ha07MailClass();
-				$confirm_url = $DOMAIN_PATH."reset_password/index.php?confirm=".$userdetails["activation_token"];
-				$deny_url = $DOMAIN_PATH."reset_password/index.php?deny=".$userdetails["activation_token"];
-				
-				//Setup our custom hooks
 				$hooks = array(
-					"searchStrs" => array("#DOMAIN#", "#CONFIRM-URL#", "#DENY-URL#", "#USERNAME#"),
-					"subjectStrs" => array($DOMAIN_PATH, $confirm_url, $deny_url, $userdetails["user_name"])
-					);
+					"searchStrs" => array("#DOMAIN#", "#CONFIRM-URL#", "#DENY-URL#", "#FIRST#", "#LAST#", "#USERNAME#", "#DATE#"),
+					"subjectStrs" => array($_DOMAIN, $confirm_url, $deny_url, $userdetails["first_name"], $userdetails["last_name"], $userdetails["username"], strval($date[5]))
+				);
 				
-				if(!$mail->newTemplateMsg("forgot_password.html",$hooks))
-				{
-					$errors[] = lang("MAIL_TEMPLATE_BUILD_ERROR");
-				}
+				if(!$mail->newTemplateMsg("forgot_password.html",$hooks)) { $_ERRORS[] = lang("MAIL_TEMPLATE_BUILD_ERROR"); }
 				else
 				{
-					if(!$mail->sendMail($userdetails["email"],"HOLIDAY ACCOMMODATION AGENCY - LOST PASSWORD REQUEST"))
-					{
-						$errors[] = lang("MAIL_ERROR");
-					}
+					if(!$mail->sendMail($userdetails["email"],"GROCERY SHOP - Forgotten Password Request")) { $_ERRORS[] = lang("MAIL_ERROR"); }
 					else
 					{
-						//Update the DB to show this account has an outstanding request
 						flagLostPasswordRequest($username,1);
-						
-						$successes[] = lang("FORGOTPASS_REQUEST_SUCCESS");
+						$_SUCCESS[] = lang("FORGOTPASS_REQUEST_SUCCESS");
 					}
 				}
 			}
@@ -89,6 +49,6 @@ if(!empty($_POST))
 	}
 }
 
-$ERROR_MESSAGE = resultBlock($errors,$successes);
+$ERROR_MESSAGE = resultBlock($_ERRORS, $_SUCCESS);
 
 ?>

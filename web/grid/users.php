@@ -25,8 +25,10 @@ function numberCount($WHERE)
 }
 
 
+if( ((!empty($_GET)) or (!empty($_GET["search"]))) and ($_GET["search"]!="all") ){  $_WHERE = " title LIKE '%".$_GET["search"]."%' "; } 
+else{ $_WHERE = " 1=1 "; }
 
-$_WHERE = " 1=1 ";
+
 if(!empty($_REQUEST['search']['value']) ) {
 	$_WHERE.=" AND ( id LIKE '%".$_REQUEST['search']['value']."%' ";
 	$_WHERE.=" OR username LIKE '%".$_REQUEST['search']['value']."%'  ";
@@ -80,15 +82,23 @@ if($_COUNT == 0){
 }
 else {
 	foreach ($_DATA as $dt) {
+		if($dt["title"]=='Administrator'){ $title = "<span class='label info'>Administrator</span>";}
+		else if($dt["title"]=='Manager'){ $title = "<span class='label warning'>Manager</span>";}
+		else if($dt["title"]=='User'){ $title = "<span class='label success'>User</span>";}
+		else{ $title = "<span class='label danger'>Other</span>";}
+
+		if(boolval($dt["active"])){ $active = "<span class='label success'>Active</span>";}
+		else{ $active = "<span class='label danger'>Inactive</span>";}
+
 		$_MATCH[$i] = array( 
 			"DT_RowId"=>"row_".(string)($i+1), 
-			"title"=>(string)$dt["title"], 
+			"title"=>(string)$title, 
 			"username"=>(string)$dt["username"], 
 			"contact"=>(string)$dt["contact"],
 			"name"=>(string)$dt["first_name"]." ".(string)$dt["last_name"],
 			"email"=>(string)$dt["email"],
-			"active"=>(string)$dt["active"],
-			"link"=>(string)$dt["id"]
+			"active"=>(string)$active,
+			"link"=>"<button onclick='updateUser(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button>"
 		);
 		$i += 1;
 	}

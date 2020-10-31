@@ -1,6 +1,6 @@
 <?php 
 
-securePage($DOMAIN_CURRENT_PATH);
+/*securePage($DOMAIN_CURRENT_PATH);
 
 if(isUserLoggedIn()) { header("Location: ".$DOMAIN_PATH."account"); die(); }
 
@@ -106,5 +106,5 @@ if(!empty($_POST) && $emailActivation)
 }
 
 $ERROR_MESSAGE = resultBlock($errors,$successes);
-
+*/
 ?>

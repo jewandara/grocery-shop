@@ -1,3 +1,7 @@
+<?php
+  securePage($_SERVER['PHP_SELF']); 
+  //require_once($_FOLDER.'web/popup/add.new.page.php');
+?>
 
 <!--     <section class="rooms-section spad">
         <div class="container">
@@ -45,10 +49,9 @@
     </section>
  -->
 
-<?php
-  securePage($_SERVER['PHP_SELF']); 
-  require_once($_FOLDER.'web/popup/add.new.page.php');
-?>
+
+
+
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
     <p>
@@ -59,12 +62,10 @@
   <header class='gs-container gs-theme' style='padding:32px 24px'>
     <h1 class='gs-xxxlarge'><i class='fa fa-file-code-o'></i>PAGES</h1>
   </header>
-
-
-
   <div class='gs-container' style='padding:32px'>
     <div class='gs-row-padding gs-margin-bottom'>
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-file-code-o"></i>  Page Grid View</b></h5>
+      <!--       
       <header class='gs-container' style='padding-top:22px; padding-bottom:20px'>
         <p class='gs-grid-button-add-new'>
           <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' id='popupButton'> <i class='fa fa-plus'></i> Add New</button>
@@ -87,17 +88,25 @@
           </select>
         </p>
       </header>
-
-      <table id='pages' class='display gs-grid-table' style='width:100%'>
+      -->
+      <style>
+        table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }
+        th { border: 1px solid #000; background-color:#000; text-align: left; padding: 8px; color:#fff; }
+        td, th { border: 1px solid #000; text-align: left; padding: 8px;}
+        tr:nth-child(even) { background-color: #dddddd; }
+      </style>
+      <table id='pages' style='width:100%'>
         <thead>
           <tr>
-              <th></th>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Position</th>
-              <th>Office</th>
+              <th>Page Id</th>
+              <th>Page Name</th>
+              <th>Page Security</th>
+              <th>Page Actions</th>
           </tr>
         </thead>
+        <tbody>
+          <?=$_TR?>
+        </tbody>
       </table>
 
     </div>

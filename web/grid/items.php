@@ -26,7 +26,10 @@ function numberCount($WHERE)
 
 
 
-$_WHERE = " 1=1 ";
+if( ((!empty($_GET)) or (!empty($_GET["search"]))) and ($_GET["search"]!="all") ){  $_WHERE = " category = '".$_GET["search"]."' "; } 
+else{ $_WHERE = " 1=1 "; }
+
+
 if(!empty($_REQUEST['search']['value']) ) {
 	$_WHERE.=" AND ( id LIKE '%".$_REQUEST['search']['value']."%' ";
 	$_WHERE.=" OR code LIKE '%".$_REQUEST['search']['value']."%'  ";
@@ -92,7 +95,7 @@ else {
 			"qty"=>(string)$dt["qty"]." ".(string)$dt["unit"],
 			"price"=>(string)$dt["price"],
 			"stock"=>(string)$dt["stock"],
-			"link"=>(string)$dt["id"]
+			"link"=>"<button onclick='updateItem(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button>"
 		);
 		$i += 1;
 	}

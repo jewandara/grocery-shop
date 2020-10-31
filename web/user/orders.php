@@ -1,6 +1,7 @@
 <?php
   securePage($_SERVER['PHP_SELF']); 
-  require_once($_FOLDER.'web/popup/add.new.order.php');
+  require_once($_FOLDER.'web/popup/add.order.php');
+  require_once($_FOLDER.'web/popup/update.order.php');
 ?>
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
@@ -17,21 +18,29 @@
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-shopping-cart"></i>  Order Grid View</b></h5>
       <header class='gs-container' style='padding-top:22px; padding-bottom:20px'>
         <p class='gs-grid-button-add-new'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' id='popupButton'> <i class='fa fa-plus'></i> Add New</button>
+          <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' onclick='addNewOrder()'> <i class='fa fa-plus'></i> Add New</button>
         </p>
         <p class='gs-grid-button-download-excel'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-black'><i class='fa fa-download'></i> Download Excel</button>
+          <button class='gs-button-gird gs-button gs-light-grey gs-hover-black' onclick='downloadToExcel()'><i class='fa fa-download'></i> Download Excel</button>
         </p>
         <p class='gs-grid-button-search-by'>
-          <select class='gs-button-gird gs-button gs-light-grey gs-hover-grey' >
-            <option class='gs-hover-white' value="0">Search By</option>
+          <select class='gs-button-gird gs-button gs-light-grey gs-hover-grey' id='dropdownGridSerchBy' onchange='serchByDropDown()'>
+            <option class='gs-hover-white' value="all">Search By Status</option>
+            <option class='gs-hover-white' value="PENDING">PENDING</option>
             <option class='gs-hover-white' value="OPEN">OPEN</option>
             <option class='gs-hover-white' value="DELIVERY">DELIVERY</option>
             <option class='gs-hover-white' value="PAID">PAID</option>
           </select>
         </p>
       </header>
-
+      <style>
+      .label { color: white; padding: 4px; border-radius: 3px; font-family: Arial;}
+      .success {background-color: #4CAF50;} /* Green */
+      .info {background-color: #2196F3;} /* Blue */
+      .warning {background-color: #ff9800;} /* Orange */
+      .danger {background-color: #f44336;} /* Red */ 
+      .other {background-color: #e7e7e7; color: black;} /* Gray */ 
+      </style>
       <table id='orders' class='display gs-grid-table' style='width:100%'>
         <thead>
           <tr>
@@ -78,17 +87,36 @@
   </footer>
 </div>
 <script type="text/javascript">
+  var dt;
+
+  function serchByDropDown() { 
+    search = document.getElementById("dropdownGridSerchBy").value;
+    dt.destroy();
+    loadGridOrders(search);
+  }
+
+  function downloadToExcel() { 
+    tablesToExcel(['orders'], ['Orders_Sheet'], 'Orders_Data.xls', 'Excel');
+  }
+
+  function addNewOrder () {
+    loadPopUp("addNewOrder");
+
+  }
+
+
   function formatOrders (d) {
   return 'Full name: '+d.name+' '+d.code+'<br>'+
       'Salary: '+d.position+'<br>'+
       'The child row can contain any data you wish, including links, images, inner tables etc.';
   }
 
-  function loadGridOrders() {
-    var dt = $('#orders').DataTable( {
+  function loadGridOrders(search="all") {
+    dt = $('#orders').DataTable( {
         "processing": true,
         "serverSide": true,
-        "ajax": { "url": "<?=$_DOMAIN?>api/grid/orders/", "type": "POST" },
+        "lengthMenu": [[10, 50, 100, 500, 1000, 5000], [10, 50, 100, 500, 1000, 5000]],
+        "ajax": { "url": "<?=$_DOMAIN?>api/grid/orders/?search="+search, "type": "POST" },
         "columns": [
             { "class": "details-control", "orderable": false, "data": null, "defaultContent": "" },
             { "data": "id" },

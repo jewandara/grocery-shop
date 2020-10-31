@@ -23,9 +23,9 @@ function numberCount($WHERE)
 	return (mysqli_fetch_array($result))[0];
 }
 
+if( ((!empty($_GET)) or (!empty($_GET["search"]))) and ($_GET["search"]!="all") ){  $_WHERE = " gs_orders.status = '".$_GET["search"]."' "; } 
+else{ $_WHERE = " 1=1 "; }
 
-
-$_WHERE = " 1=1 ";
 if(!empty($_REQUEST['search']['value']) ) {
 	$_WHERE.=" AND ( gs_orders.id LIKE '%".$_REQUEST['search']['value']."%' ";
 	$_WHERE.=" OR gs_orders.cust_id LIKE '%".$_REQUEST['search']['value']."%'  ";
@@ -83,15 +83,20 @@ if($_COUNT == 0){
 }
 else {
 	foreach ($_DATA as $dt) {
+		if($dt["status"]=='PENDING'){ $status = "<span class='label danger'>PENDING</span>";}
+		else if($dt["status"]=='OPEN'){ $status = "<span class='label warning'>OPEN</span>";}
+		else if($dt["status"]=='DELIVERY'){ $status = "<span class='label info'>DELIVERY</span>";}
+		else if($dt["status"]=='PAID'){ $status = "<span class='label success'>PAID</span>";}
+		else{ $status = "<span class='label other'>OTHER</span>";}
 		$_MATCH[$i] = array( 
 			"DT_RowId"=>"row_".(string)($i+1), 
 			"id"=>(string)$dt["id"], 
-			"status"=>(string)$dt["status"], 
+			"status"=>(string)$status, 
 			"method"=>(string)$dt["method"],
 			"first_name"=>(string)$dt["first_name"]." ".(string)$dt["last_name"],
 			"address"=>(string)$dt["address"],
 			"balance"=>"LKR ".(string)(number_format($dt["balance"], 2)),
-			"link"=>"<i class='fa fa-pencil-square-o'></i>"
+			"link"=>"<button onclick='updateOrder(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button>"
 		);
 		$i += 1;
 	}

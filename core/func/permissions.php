@@ -1,8 +1,7 @@
 <?php 
 
 securePage($_SERVER['PHP_SELF']);
-/*
-//Forms posted
+
 if(!empty($_POST))
 {
 	//Delete permission levels
@@ -38,10 +37,10 @@ if(!empty($_POST))
 	}
 }
 
-$permissionData = fetchAllPermissions(); //Retrieve list of all permission levels
-*/
-
+$permissionData = fetchAllPermissions(); 
 $ERROR_MESSAGE = resultBlock($_ERRORS,$_SUCCESS);
+
+
 
 
 ?>

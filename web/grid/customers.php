@@ -83,7 +83,7 @@ else {
 			"email"=>(string)$dt["email"],
 			"address"=>(string)$dt["address"],
 			"gps"=>"<a href='https://www.google.com/maps/dir/".(string)$dt["latitude"].",".(string)$dt["longitude"]."' target='_blank'>View Gmap</a>",
-			"link"=>(string)$dt["id"]
+			"link"=>"<button onclick='updateCustomer(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button>"
 		);
 		$i += 1;
 	}

@@ -41,7 +41,27 @@ $_DATE = array(
 	"SECOND"=>date("s"), 
 	"STATE"=>date("a")
 );
+// $DATA_ARRY = previousMonth(12);
+function previousMonth($i)
+{
+	$previousMonth = date("m",strtotime("-".$i." month"));
+	$previousYear = date("Y",strtotime("-".$i." month"));
+	$previousMonthString = date("F", mktime(0, 0, 0, $previousMonth, 10));
+	$previousMonthStart = date('Y-m-01',strtotime("-".$i." month"));
+	$previousMonthEnd = date('Y-m-t',strtotime("-".$i." month"));
+	return array( $previousYear, $previousMonth, $previousMonthString, $previousMonthStart, $previousMonthEnd );
+}
 
+function previousDay($i)
+{
+	$previousDate = date("Y-m-d",strtotime("-".$i." day"));
+	$previousDateString = date("Y F, d",strtotime("-".$i." day"));
+	$previousDateDay = date("d",strtotime("-".$i." day"));
+	$previousDateYear = date("Y",strtotime("-".$i." day"));
+	$previousDateMonth = date("m",strtotime("-".$i." day"));
+	$previousDateMonthString = date("F",strtotime("-".$i." day"));
+	return array( $previousDateDay, $previousDateYear, $previousDateMonth, $previousDateMonthString, $previousDate, $previousDateString );
+}
 
 $_MENU = array(	
 	"dashboard"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."dashboard'>&nbsp;<i class='fa fa-home'></i>&nbsp;&nbsp;  DASHBOARD</a>",

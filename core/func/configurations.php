@@ -14,9 +14,9 @@ if(!empty($_POST))
 		$newWebsiteName = $newSettings[1];
 		if(minMaxRange(1,150,$newWebsiteName))
 		{
-			$errors[] = lang("CONFIG_NAME_CHAR_LIMIT",array(1,150));
+			$_ERRORS[] = lang("CONFIG_NAME_CHAR_LIMIT",array(1,150));
 		}
-		else if (count($errors) == 0) {
+		else if (count($_ERRORS) == 0) {
 			$cfgId[] = 1;
 			$cfgValue[1] = $newWebsiteName;
 			$websiteName = $newWebsiteName;
@@ -28,12 +28,12 @@ if(!empty($_POST))
 		$newWebsiteUrl = $newSettings[2];
 		if(minMaxRange(1,150,$newWebsiteUrl))
 		{
-			$errors[] = lang("CONFIG_URL_CHAR_LIMIT",array(1,150));
+			$_ERRORS[] = lang("CONFIG_URL_CHAR_LIMIT",array(1,150));
 		}
 		else if (substr($newWebsiteUrl, -1) != "/"){
-			$errors[] = lang("CONFIG_INVALID_URL_END");
+			$_ERRORS[] = lang("CONFIG_INVALID_URL_END");
 		}
-		else if (count($errors) == 0) {
+		else if (count($_ERRORS) == 0) {
 			$cfgId[] = 2;
 			$cfgValue[2] = $newWebsiteUrl;
 			$websiteUrl = $newWebsiteUrl;
@@ -45,13 +45,13 @@ if(!empty($_POST))
 		$newEmail = $newSettings[3];
 		if(minMaxRange(1,150,$newEmail))
 		{
-			$errors[] = lang("CONFIG_EMAIL_CHAR_LIMIT",array(1,150));
+			$_ERRORS[] = lang("CONFIG_EMAIL_CHAR_LIMIT",array(1,150));
 		}
 		elseif(!isValidEmail($newEmail))
 		{
-			$errors[] = lang("CONFIG_EMAIL_INVALID");
+			$_ERRORS[] = lang("CONFIG_EMAIL_INVALID");
 		}
-		else if (count($errors) == 0) {
+		else if (count($_ERRORS) == 0) {
 			$cfgId[] = 3;
 			$cfgValue[3] = $newEmail;
 			$emailAddress = $newEmail;
@@ -63,9 +63,9 @@ if(!empty($_POST))
 		$newActivation = $newSettings[4];
 		if($newActivation != "true" AND $newActivation != "false")
 		{
-			$errors[] = lang("CONFIG_ACTIVATION_TRUE_FALSE");
+			$_ERRORS[] = lang("CONFIG_ACTIVATION_TRUE_FALSE");
 		}
-		else if (count($errors) == 0) {
+		else if (count($_ERRORS) == 0) {
 			$cfgId[] = 4;
 			$cfgValue[4] = $newActivation;
 			$emailActivation = $newActivation;
@@ -77,9 +77,9 @@ if(!empty($_POST))
 		$newResend_activation_threshold = $newSettings[5];
 		if($newResend_activation_threshold > 72 OR $newResend_activation_threshold < 0)
 		{
-			$errors[] = lang("CONFIG_ACTIVATION_RESEND_RANGE",array(0,72));
+			$_ERRORS[] = lang("CONFIG_ACTIVATION_RESEND_RANGE",array(0,72));
 		}
-		else if (count($errors) == 0) {
+		else if (count($_ERRORS) == 0) {
 			$cfgId[] = 5;
 			$cfgValue[5] = $newResend_activation_threshold;
 			$resend_activation_threshold = $newResend_activation_threshold;
@@ -91,12 +91,12 @@ if(!empty($_POST))
 		$newLanguage = $newSettings[6];
 		if(minMaxRange(1,150,$language))
 		{
-			$errors[] = lang("CONFIG_LANGUAGE_CHAR_LIMIT",array(1,150));
+			$_ERRORS[] = lang("CONFIG_LANGUAGE_CHAR_LIMIT",array(1,150));
 		}
 		elseif (!file_exists($newLanguage)) {
-			$errors[] = lang("CONFIG_LANGUAGE_INVALID",array($newLanguage));				
+			$_ERRORS[] = lang("CONFIG_LANGUAGE_INVALID",array($newLanguage));				
 		}
-		else if (count($errors) == 0) {
+		else if (count($_ERRORS) == 0) {
 			$cfgId[] = 6;
 			$cfgValue[6] = $newLanguage;
 			$language = $newLanguage;
@@ -108,12 +108,12 @@ if(!empty($_POST))
 		$newTemplate = $newSettings[7];
 		if(minMaxRange(1,150,$template))
 		{
-			$errors[] = lang("CONFIG_TEMPLATE_CHAR_LIMIT",array(1,150));
+			$_ERRORS[] = lang("CONFIG_TEMPLATE_CHAR_LIMIT",array(1,150));
 		}
 		elseif (!file_exists($newTemplate)) {
-			$errors[] = lang("CONFIG_TEMPLATE_INVALID",array($newTemplate));				
+			$_ERRORS[] = lang("CONFIG_TEMPLATE_INVALID",array($newTemplate));				
 		}
-		else if (count($errors) == 0) {
+		else if (count($_ERRORS) == 0) {
 			$cfgId[] = 7;
 			$cfgValue[7] = $newTemplate;
 			$template = $newTemplate;
@@ -121,12 +121,12 @@ if(!empty($_POST))
 	}
 	
 	//Update configuration table with new settings
-	if (count($errors) == 0 AND count($cfgId) > 0) {
+	if (count($_ERRORS) == 0 AND count($cfgId) > 0) {
 		if (updateConfig($cfgId, $cfgValue)) {
 			$successes[] = lang("CONFIG_UPDATE_SUCCESSFUL");
 		}
 		else {
-			$errors[] = lang("SQL_ERROR");	
+			$_ERRORS[] = lang("SQL_ERROR");	
 		}
 	}
 }
