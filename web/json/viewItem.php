@@ -3,13 +3,13 @@
 function items($WHERE, $ORDER, $LIMIT)
 {
     global $_SQL, $_PREFIX; 
-    $STMT = $_SQL->prepare("SELECT `id`, `code`, `name`, `category`, `qty`, `unit`, `price`, `stock`, `last_update_stamp`, `insert_stamp` 
+    $STMT = $_SQL->prepare("SELECT `id`, `code`, `name`, `category`, `qty`, `unit`, `price`, `stock`, `stock_alart`, `last_update_stamp`, `insert_stamp` 
     	FROM `gs_items` WHERE ".$WHERE."  ".$ORDER."  ".$LIMIT." ");
 	$STMT->execute();
-	$STMT->bind_result( $id, $code, $name, $category, $qty, $unit, $price, $stock, $last_update_stamp, $insert_stamp );
+	$STMT->bind_result( $id, $code, $name, $category, $qty, $unit, $price, $stock, $stock_alart, $last_update_stamp, $insert_stamp );
 	while ($STMT->fetch()){
 		$row[] = array( 'id'=>$id, 'code'=>$code, 'name'=>$name, 'category'=>$category, 'qty'=>$qty, 'unit'=>$unit, 
-				'price'=>$price, 'stock'=>$stock, 'last_update_stamp'=>$last_update_stamp, 'insert_stamp'=>$insert_stamp );
+				'price'=>$price, 'stock'=>$stock, 'stock_alart'=>$stock_alart, 'last_update_stamp'=>$last_update_stamp, 'insert_stamp'=>$insert_stamp );
 	}
 	$STMT->close();
 	if(!empty($row)){ return ($row); }
@@ -25,8 +25,12 @@ function numberCount($WHERE)
 }
 
 
-if(empty($_JSON["id"])){ $_WHERE = " 1=1 "; }
-else{ $_WHERE = " id=".strval($_JSON["id"]); }
+
+
+if(!empty($_JSON["id"])){ $_WHERE = " id=".strval($_JSON["id"]); }
+else if(!empty($_JSON["code"])){ $_WHERE = " code='".strval($_JSON["code"])."' "; }
+else if(!empty($_JSON["category"])){ $_WHERE = " category='".strval($_JSON["category"])."' "; }
+else { $_WHERE = " 1=1 ";  }
 
 if(empty($_JSON["searchBy"])){ $_WHERE.= " "; }
 else{ 

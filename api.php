@@ -1,6 +1,6 @@
 <?php
 
-//header("Content-Type: application/json;charset=utf-8");
+header("Content-Type: application/json;charset=utf-8");
 require_once(dirname(__FILE__).'/core/class.define.php');
 require_once(dirname(__FILE__).'/core/class.url.php');
 require_once(dirname(__FILE__).'/core/class.sql.php');
@@ -70,6 +70,8 @@ else if($_URL[$_PATH_ARRY_COUNT+1] == "json"){
             require_once($_FOLDER.'web/json/viewItem.php'); break;
         case 'addItem':
             require_once($_FOLDER.'web/json/addItem.php'); break;
+        case 'addItemImage':
+            require_once($_FOLDER.'web/json/addItemImage.php'); break;
         case 'editItem':
             require_once($_FOLDER.'web/json/editItem.php'); break;
         case 'viewOrder':
@@ -80,6 +82,8 @@ else if($_URL[$_PATH_ARRY_COUNT+1] == "json"){
             require_once($_FOLDER.'web/json/editOrder.php'); break;
         case 'viewOrderDetail':
             require_once($_FOLDER.'web/json/viewOrderDetail.php'); break;
+        case 'viewOrderByID':
+            require_once($_FOLDER.'web/json/viewOrderByID.php'); break;
         case 'addOrderDetail':
             require_once($_FOLDER.'web/json/addOrderDetail.php'); break;
         case 'viewUser':

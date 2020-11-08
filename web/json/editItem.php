@@ -22,14 +22,14 @@ if(!empty($_JSON["id"])){
 	$_RESULT = new stdClass();
 	$_RESULT->error = false;
 	$_RESULT->message = "success";
-	$_RESULT->result = "";
+	$_RESULT->result = "Item Updated";
 	echo json_encode($_RESULT);
 
 } else{ 
 	$_RESULT = new stdClass();
 	$_RESULT->error = true;
 	$_RESULT->message = "error";
-	$_RESULT->result = "Id can not null";
+	$_RESULT->result = "Can not find the item ID";
 	echo json_encode($_RESULT);
 }
 

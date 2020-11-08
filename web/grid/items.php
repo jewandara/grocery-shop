@@ -95,7 +95,7 @@ else {
 			"qty"=>(string)$dt["qty"]." ".(string)$dt["unit"],
 			"price"=>(string)$dt["price"],
 			"stock"=>(string)$dt["stock"],
-			"link"=>"<button onclick='updateItem(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button>"
+			"link"=>"<button onclick='updateItem(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button><button onclick='updateItemImage(\"".(string)$dt["code"]."\")' style='margin-left:6px;padding-left:4px;padding-right:4px;'><i class='fa fa-picture-o'></i></button>"
 		);
 		$i += 1;
 	}

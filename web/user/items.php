@@ -109,6 +109,14 @@
     loadUpdateForm(id);
   }
 
+  function updateItemImage (code) {
+    console.log(code);
+    loadPopUp("updateItemImage");
+    $("#recodeImageId").empty();
+    $("#recodeImageId").append(code);
+    loadUpdateImageForm(code);
+  }
+
   function formatItems (d) {
   return 'Full name: '+d.name+' '+d.code+'<br>'+
       'Salary: '+d.position+'<br>'+

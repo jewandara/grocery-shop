@@ -3,6 +3,7 @@
   require_once($_FOLDER.'web/popup/add.order.php');
   require_once($_FOLDER.'web/popup/update.order.php');
 ?>
+
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
     <p>
@@ -35,11 +36,11 @@
       </header>
       <style>
       .label { color: white; padding: 4px; border-radius: 3px; font-family: Arial;}
-      .success {background-color: #4CAF50;} /* Green */
-      .info {background-color: #2196F3;} /* Blue */
-      .warning {background-color: #ff9800;} /* Orange */
-      .danger {background-color: #f44336;} /* Red */ 
-      .other {background-color: #e7e7e7; color: black;} /* Gray */ 
+      .success {background-color: #4CAF50; font-size: 12px; } /* Green */
+      .info {background-color: #2196F3; font-size: 12px; } /* Blue */
+      .warning {background-color: #ff9800; font-size: 12px; } /* Orange */
+      .danger {background-color: #f44336; font-size: 12px; } /* Red */ 
+      .other {background-color: #e7e7e7; color: black; font-size: 12px; } /* Gray */ 
       </style>
       <table id='orders' class='display gs-grid-table' style='width:100%'>
         <thead>
@@ -86,6 +87,8 @@
     All Rights Reserved.</p>
   </footer>
 </div>
+
+
 <script type="text/javascript">
   var dt;
 
@@ -102,6 +105,19 @@
   function addNewOrder () {
     loadPopUp("addNewOrder");
 
+  }
+  function updateOrder (id) {
+    loadPopUp("updateOrder");
+    $("#recodeId").empty();
+    $("#recodeId").append(" "+id+"");
+    loadUpdateForm(id);
+  }
+
+  function viewOrderDetails (id) {
+    loadPopUp("updateOrderDetail");
+    $("#ViewRecodeId").empty();
+    $("#ViewRecodeId").append(" "+id+"");
+    loadUpdateDetailForm(id);
   }
 
 

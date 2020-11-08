@@ -40,7 +40,7 @@
       </style>
 
       <div class='container'>
-        <form id='item-form'>
+        <form id='add-form'>
 
             <div class='row'>
               <div class='col-25'>
@@ -124,12 +124,12 @@
               <div class='col-25'>
                 <label for='message'></label>
               </div>
-              <div class='col-75' id='form-message'>
+              <div class='col-75' id='form-message-add'>
               </div>
             </div>
             <div class='row'>
               <br>
-              <input type='submit' value='SUBMIT' onclick='validateForm()'>
+              <input type='submit' value='SUBMIT' onclick='validateAddForm()'>
             </div>
         </form>
       </div>
@@ -141,8 +141,9 @@
 </div>
 
 <script type="text/javascript">
-  function validateForm() {
-    $("#item-form").validate({
+
+  function validateAddForm() {
+    $("#add-form").validate({
       debug: true,
       rules: {
         category:{ required: true },
@@ -165,59 +166,67 @@
         //email: "Please enter a valid email address"
       },
       errorPlacement: function(error, element) {
-          /* console.log(element); console.log(error); */
-          var placement = $(element).data('error');
-          if (placement) {  $(placement).append(error); } 
-          else {  error.insertAfter(element); }
+        console.log(error);
+        var placement = $(element).data('error');
+        if (placement) {  $(placement).append(error); } 
+        else {  error.insertAfter(element); }
       },
-      submitHandler: function(form) { submitForm(); /*console.log("No Errors, Submitting The Form"); */ }
+      submitHandler: function(form) { 
+        console.log("No Errors, Submitting The Form");
+        submitAddForm();
+      }
     });
   }
 
-
-
-  function submitForm() {
+  function submitAddForm() {
     var formData = '{ '+
-          '"category" : "'+$('input[name=category]').val() + '",' +
+          '"category" : "'+$('select[name=category]').val() + '",' +
           '"name" : "'+$('input[name=name]').val() + '",' +
-          '"test" : "trst"' +
+          '"qty" : "'+$('input[name=quantity]').val() + '",' +
+          '"unit" : "'+$('select[name=unit]').val() + '",' +
+          '"price" : "'+$('input[name=price]').val() + '",' +
+          '"stock" : "'+$('input[name=stock]').val() + '",' +
+          '"stock_alart" : "'+$('input[name=alert]').val() + '"' +
       '}';
-    //console.log(formData);
-    var jsonFormData = jQuery.parseJSON(formData);
-    //console.log(jsonFormData);
-
+    console.log(formData);
+    var jsonData = jQuery.parseJSON(formData);
+    console.log(jsonData);
+    console.log('<?=$_DOMAIN?>api/json/addItem/');
     $.ajax({
           type        : 'POST',
-          url         : '<?=$_DOMAIN?>api/json/item',
-          data        : jsonFormData,
+          contentType : "application/json; charset=utf-8",
+          url         : '<?=$_DOMAIN?>api/json/addItem/',
+          data        : JSON.stringify(jsonData),
           dataType    : 'json',
-          encode      : true,
+          encode      : false,
           success: function (response, status, xhr) {
+            console.log(response);
             if((xhr.status==200) && (status=="success")){
               if(response["error"]==false){
-                $("#form-message").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
+                $("#form-message-add").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
                   "<i class='start-icon fa fa-check-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Successfully !</b>New recode added successfully.<br> "+response['message']+
+                    "<b>ID</b> "+response['result']+" <br> "+
+                    "<b>Successfully !</b>New recode added successfully. "+
                   "</div>");
-                document.getElementById("item-form").reset();
+                document.getElementById("add-form").reset();
               }else{
-                $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+                $("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>New record is not updated. Please call the administrator<br>"+
+                    "<b>Result Error !</b>New record is not updated. Please call the administrator<br>"+
                   "</div>");
               }
             }else{
-              $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+              $("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>Server error found on the api. Please call the administrator<br>"+
+                    "<b>Result Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
             }
           },
           error: function (xhr, status, error) {
             if(xhr.status==200){ 
-              $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+              $("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>Server error found on the api. Please call the administrator<br>"+
+                    "<b>Api Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
             }else{ console.log(xhr.responseText); }
           }
@@ -225,6 +234,5 @@
     event.preventDefault();
   }
  
-
   //window.onload = function() {  };
 </script>

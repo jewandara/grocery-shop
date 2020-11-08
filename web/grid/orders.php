@@ -60,6 +60,14 @@ $_COUNT = numberCount($_WHERE);
 
 
 
+if(isUserLoggedIn()) { 
+	if ($loggedInUser->checkPermission(array(3))) { $_MENU = $_MENU_MANAGER; }
+	else if ($loggedInUser->checkPermission(array(2))) { $_MENU = $_MENU_ADMIN; }
+	else if ($loggedInUser->checkPermission(array(1))) { $_MENU = $_MENU_USER; }
+
+}
+
+
 
 $i = 0;
 
@@ -88,6 +96,7 @@ else {
 		else if($dt["status"]=='DELIVERY'){ $status = "<span class='label info'>DELIVERY</span>";}
 		else if($dt["status"]=='PAID'){ $status = "<span class='label success'>PAID</span>";}
 		else{ $status = "<span class='label other'>OTHER</span>";}
+
 		$_MATCH[$i] = array( 
 			"DT_RowId"=>"row_".(string)($i+1), 
 			"id"=>(string)$dt["id"], 
@@ -96,7 +105,7 @@ else {
 			"first_name"=>(string)$dt["first_name"]." ".(string)$dt["last_name"],
 			"address"=>(string)$dt["address"],
 			"balance"=>"LKR ".(string)(number_format($dt["balance"], 2)),
-			"link"=>"<button onclick='updateOrder(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button>"
+			"link"=>"<button onclick='updateOrder(".(string)$dt["id"].")' style='padding-left:4px;padding-right:4px;'><i class='fa fa-pencil-square-o'></i></button><button onclick='viewOrderDetails(".(string)$dt["id"].")' style='margin-left:6px;padding-left:4px;padding-right:4px;'><i class='fa fa-file-text'></i></button>"
 		);
 		$i += 1;
 	}
