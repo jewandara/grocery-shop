@@ -2,55 +2,33 @@
 
 function resizeImage($sourceImage, $targetImage, $maxWidth, $maxHeight, $quality = 80)
 {
-    // Obtain image from given source file.
-    if (!$image = @imagecreatefromjpeg($sourceImage))
-    {
-        return false;
-    }
-
-    // Get dimensions of source image.
+    if (!$image = @imagecreatefromjpeg($sourceImage)) { return false; }
     list($origWidth, $origHeight) = getimagesize($sourceImage);
-
-    if ($maxWidth == 0)
-    {
-        $maxWidth  = $origWidth;
-    }
-
-    if ($maxHeight == 0)
-    {
-        $maxHeight = $origHeight;
-    }
-
-    // Calculate ratio of desired maximum sizes and original sizes.
+    if ($maxWidth == 0) {  $maxWidth  = $origWidth; }
+    if ($maxHeight == 0) {  $maxHeight = $origHeight;  }
     $widthRatio = $maxWidth / $origWidth;
     $heightRatio = $maxHeight / $origHeight;
-
-    // Ratio used for calculating new image dimensions.
     $ratio = min($widthRatio, $heightRatio);
-
-    // Calculate new image dimensions.
     $newWidth  = (int)$origWidth  * $ratio;
     $newHeight = (int)$origHeight * $ratio;
-
     // Create final image with new dimensions.
     $newImage = imagecreatetruecolor($newWidth, $newHeight);
     imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
     imagejpeg($newImage, $targetImage, $quality);
-
     // Free up the memory.
     imagedestroy($image);
     imagedestroy($newImage);
-
     return true;
 }
 
 if(isset($_FILES['file']['name'])){
 
-
 	$filename = $_FILES['file']['name'];
 	$location = $_FOLDER."images/items/".$filename;
 	$Savelocation = $_FOLDER."images/items/".$_GET['id'].".jpg";
 	$Thumblocation = $_FOLDER."images/items/thumb/".$_GET['id'].".jpg";
+	$xxsmallThumblocation = $_FOLDER."images/items/xxsmall/".$_GET['id'].".jpg";
+	$xxxsmallThumblocation = $_FOLDER."images/items/xxxsmall/".$_GET['id'].".jpg";
 
 	if (file_exists($Savelocation)) { unlink($Savelocation); }
 
@@ -75,8 +53,13 @@ if(isset($_FILES['file']['name'])){
         imagejpeg($image, $Savelocation, 70);
     }
 
-	resizeImage($Savelocation, $Thumblocation, 200, 200);
+    if(file_exists($Thumblocation)){ unlink($Thumblocation); }
+    if(file_exists($xxsmallThumblocation)){ unlink($xxsmallThumblocation); }
+    if(file_exists($xxxsmallThumblocation)){ unlink($xxxsmallThumblocation); }
 
+	resizeImage($Savelocation, $Thumblocation, 200, 200);
+	resizeImage($Savelocation, $xxsmallThumblocation, 64, 64);
+	resizeImage($Savelocation, $xxxsmallThumblocation, 16, 16);
 
 	$_RESULT = new stdClass();
 	$_RESULT->error = false;

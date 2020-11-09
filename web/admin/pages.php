@@ -65,19 +65,24 @@
   <div class='gs-container' style='padding:32px'>
     <div class='gs-row-padding gs-margin-bottom'>
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-file-code-o"></i>  Page Grid View</b></h5>
-      <style>
-        table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }
-        th { border: 1px solid #000; background-color:#000; text-align: left; padding: 8px; color:#fff; }
-        td, th { border: 1px solid #000; text-align: left; padding: 8px;}
-        tr:nth-child(even) { background-color: #dddddd; }
-      </style>
+	    <style>
+	        table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }
+	        th { border: 1px solid #000; background-color:#000; text-align: left; padding: 8px; color:#fff; }
+	        td, th { border: 1px solid #000; text-align: left; padding: 8px;}
+	        tr:nth-child(even) { background-color: #dddddd; }
+		    .label { color: white; padding: 4px; color:#fff; border-radius: 3px; font-family: Arial;}
+		    .success {background-color: #4CAF50; font-size: 12px; } /* Green */
+		    .info {background-color: #2196F3; font-size: 12px; } /* Blue */
+		    .warning {background-color: #ff9800; font-size: 12px; } /* Orange */
+		    .danger {background-color: #f44336; font-size: 12px; } /* Red */ 
+		    .other {background-color: #e7e7e7; color: black; font-size: 12px; } /* Gray */ 
+		  </style>
       <table id='pages' style='width:100%'>
         <thead>
           <tr>
               <th>Page Id</th>
               <th>Page Name</th>
               <th>Page Security</th>
-              <th>Page Actions</th>
           </tr>
         </thead>
         <tbody>

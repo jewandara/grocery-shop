@@ -21,10 +21,10 @@ $_MENU_ADMIN = array(
   "item"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."items'>&nbsp;<i class='fa fa-file-text'></i>&nbsp;&nbsp; ITEMS</a>",
   "user"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."users'>&nbsp;<i class='fa fa-users'></i>&nbsp;&nbsp; USERS</a>",
   "customer"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."customers'>&nbsp;<i class='fa fa-smile-o'></i>&nbsp;&nbsp; CUSTOMERS</a>",
-  "pages"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."pages'>&nbsp;<i class='fa fa-file-code-o'></i>&nbsp;&nbsp; PAGES</a>",
-  "permission"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."permissions'>&nbsp;<i class='fa fa-unlock-alt'></i>&nbsp;&nbsp; PERMISSIONS</a>",
+  /*"permission"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."permissions'>&nbsp;<i class='fa fa-unlock-alt'></i>&nbsp;&nbsp; PERMISSIONS</a>",*/
   "report"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."reports'>&nbsp;<i class='fa fa-line-chart'></i>&nbsp;&nbsp; REPORTS</a>",
   /*"setting"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."settings'>&nbsp;<i class='fa fa-cogs'></i>&nbsp;&nbsp; SETTINGS</a>",*/
+  "pages"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."pages'>&nbsp;<i class='fa fa-file-code-o'></i>&nbsp;&nbsp; PAGES</a>",
   "configuration"=>"<a class='gs-bar-item gs-button' href='".$_DOMAIN."configurations'>&nbsp;<i class='fa fa-desktop'></i>&nbsp;&nbsp; CONFIGURATIONS</a>"
 );
 

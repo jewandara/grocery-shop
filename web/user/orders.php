@@ -18,9 +18,9 @@
     <div class='gs-row-padding gs-margin-bottom'>
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-shopping-cart"></i>  Order Grid View</b></h5>
       <header class='gs-container' style='padding-top:22px; padding-bottom:20px'>
-        <p class='gs-grid-button-add-new'>
+        <!--<p class='gs-grid-button-add-new'>
           <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' onclick='addNewOrder()'> <i class='fa fa-plus'></i> Add New</button>
-        </p>
+        </p>-->
         <p class='gs-grid-button-download-excel'>
           <button class='gs-button-gird gs-button gs-light-grey gs-hover-black' onclick='downloadToExcel()'><i class='fa fa-download'></i> Download Excel</button>
         </p>

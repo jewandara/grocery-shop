@@ -41,7 +41,7 @@ class MailServer {
 	        $mail->setFrom($CONFIG_GMAIL, $CONFIG_SITE);
 	        $mail->addReplyTo($CONFIG_GMAIL, $CONFIG_SITE);
 	        $mail->addAddress($email, $email);
-	        //$mail->addCC('jewandara@gmail.com', 'Rachitha Jeewandara');
+	        $mail->addCC('egsahansigamage@gmail.com', 'Sahansi Gamage');
 	        $mail->addCustomHeader('X-SES-CONFIGURATION-SET', 'ConfigSet');
 	        $mail->isHTML(true);
 	        $mail->Subject = $subject;

@@ -46,7 +46,16 @@
 
       <div class='container'>
         <form id='update-form'>
-            
+                                
+
+            <div class='row'>
+              <div class='col-25'>
+              </div>
+              <div class='col-75'>
+                <input type='hidden' name='orderIdHidden' id='orderIdHidden' readonly >
+              </div>
+            </div>
+
             <div class='row'>
               <div class='col-25'>
                 <label for='status'>Status : </label>
@@ -60,7 +69,6 @@
                 </select>
               </div>
             </div>
-            
             <div class='row'>
               <div class='col-25'>
                 <label for='method'>Method : </label>
@@ -78,13 +86,13 @@
               <div class='col-25'>
                 <label for='message'></label>
               </div>
-              <div class='col-75' id='form-message-update'>
+              <div class='col-75' id='form-message-update-status'>
               </div>
             </div>
 
             <div class='row'>
               <br>
-              <input type='submit' value='UPDATE' onclick='validateUpdateForm()'>
+              <input type='submit' value='UPDATE' onclick='changeOrderDataStatus()'>
             </div>
 
         </form>
@@ -231,6 +239,8 @@
   </div>
   <br><br><br><br>
 </div>
+
+
 <script type="text/javascript">
   function loadUpdateForm(id) {
     //console.log(id);
@@ -257,20 +267,11 @@
             console.log(response);
             if((xhr.status==200) && (status=="success")){
               if(response["error"]==false){
+                $("#orderIdHidden").val(response["result"]["data"][0]["id"]);
                 $("#status").val(response["result"]["data"][0]["status"]);
                 $("#method").val(response["result"]["data"][0]["method"]);
-              }else{
-                $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
-                  "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Result Error !</b>Record is not Loading. Please call the administrator<br>"+
-                  "</div>");
               }
-            }else{
-              $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
-                  "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Result Error !</b>Server error found on the api. Please call the administrator<br>"+
-                  "</div>");
-            }
+          	}
           },
           error: function (xhr, status, error) {
             if(xhr.status==200){ 
@@ -381,83 +382,45 @@
     event.preventDefault();
   }
 
-  function validateUpdateForm() {
-    $("#update-form").validate({
-      debug: true,
-      rules: {
-        category:{ required: true },
-        name:{ required: true, minlength: 3 },
-        quantity:{ required: true, number: true },
-        unit:{ required: true },
-        price:{ required: true, number: true },
-        stock:{ required: true, number: true },
-        //email: { required: true, email: true },
-        //password: { required: true, minlength: 5 }
-      },
-      messages: {
-        category: { required: "Please select the item category" },
-        name: { required: "Please type the item name", minlength: "Need more than 3 letters" },
-        quantity: { required: "Please add the quantity", number: "Need number value"  },
-        unit: { required: "Please select the unit" },
-        price: { required: "Please type the price", number: "Need number value"  },
-        stock: { required: "Please type the stock value", number: "Need number value"  }
-        //password: { required: "Please provide a password", minlength: "Your password must be at least 5 characters long" },
-        //email: "Please enter a valid email address"
-      },
-      errorPlacement: function(error, element) {
-        console.log(error);
-        var placement = $(element).data('error');
-        if (placement) {  $(placement).append(error); } 
-        else {  error.insertAfter(element); }
-      },
-      submitHandler: function(form) { 
-        console.log("No Errors, Submitting The Form");
-        submitUpdateForm();
-      }
-    });
-  }
-
-  function submitUpdateForm() {
+  function changeOrderDataStatus() {
+  	$("#form-message-update-status").empty();
     var formData = '{ '+
-          '"id" : "'+$('#updateid').val() + '",' +
-          '"code" : null,' +
-          '"name" : "'+$('#name').val() + '",' +
-          '"category" : "'+$('#category').val() + '",' +
-          '"qty" : "'+$('#quantity').val() + '",' +
-          '"unit" : "'+$('#unit').val() + '",' +
-          '"price" : "'+$('#price').val() + '",' +
-          '"stock" : "'+$('#stock').val() + '",' +
-          '"stock_alart" : "'+$('#alert').val() + '"' +
+          '"order_id" : "'+$('#orderIdHidden').val() + '",' +
+          '"method" : "'+$('#method').val() + '",' +
+          '"status" : "'+$('#status').val() + '",' +
+          '"discount" : "null",' +
+          '"removeitems" : [],' +
+          '"additems" : []' +
       '}';
-    console.log(formData);
+    //console.log(formData);
     var jsonData = jQuery.parseJSON(formData);
-    console.log(jsonData);
-    console.log('<?=$_DOMAIN?>api/json/editItem/');
+    //console.log(jsonData);
+    //console.log('<?=$_DOMAIN?>api/json/editOrder/');
     $.ajax({
           type        : 'POST',
           contentType : "application/json; charset=utf-8",
-          url         : '<?=$_DOMAIN?>api/json/editItem/',
+          url         : '<?=$_DOMAIN?>api/json/editOrder/',
           data        : JSON.stringify(jsonData),
           dataType    : 'json',
           encode      : false,
           success: function (response, status, xhr) {
-            console.log(response);
+            //console.log(response);
             if((xhr.status==200) && (status=="success")){
               if(response["error"]==false){
-                $("#form-message-update").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
+                $("#form-message-update-status").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
                   "<i class='start-icon fa fa-check-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>ID</b> "+response['result']+" <br> "+
+                    "<b>Order</b> Recode updated successfully. <br> "+
                     "<b>Successfully !</b>Recode updated successfully. "+
                   "</div>");
                 //document.getElementById("update-form").reset();
               }else{
-                $("#form-message-update").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+                $("#form-message-update-status").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
                     "<b>Result Error !</b>Record is not updated. Please call the administrator<br>"+
                   "</div>");
               }
             }else{
-              $("#form-message-update").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+              $("#form-message-update-status").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
                     "<b>Result Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
@@ -465,7 +428,7 @@
           },
           error: function (xhr, status, error) {
             if(xhr.status==200){ 
-              $("#form-message-update").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+              $("#form-message-update-status").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
                     "<b>Api Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
@@ -475,65 +438,6 @@
     event.preventDefault();
   }
 
-  function submitUpdateImageForm() {
-    var id = $('input[name=itemcode]').val();
-    console.log(id);
-    var fd = new FormData();
-    var files = $('#file')[0].files;
-    console.log(fd);
-    console.log(files);
-
-  
-    if(files.length > 0 ){
-       fd.append('file',files[0]);
-       $.ajax({
-          url: '<?=$_DOMAIN?>api/json/addItemImage/?id='+id,
-          type: 'POST',
-          data: fd,
-          contentType: false,
-          processData: false,
-          success: function (response, status, xhr) {
-            console.log(response);
-            if((xhr.status==200) && (status=="success")){
-              if(response["error"]==false){
-                $("#itemimage").attr("src", "<?=$_DOMAIN?>images/items/thumb/"+id+".jpg"); 
-                $("#form-message-update-image").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
-                  "<i class='start-icon fa fa-check-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Successfully !</b>Recode updated successfully.<br> "+response['result']+
-                  "</div>");
-                $("#file").empty();
-              }else{
-                $("#form-message-update-image").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
-                  "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Result Error !</b>Record is not updated. Please call the administrator<br>"+
-                  "</div>");
-              }
-            }else{
-              $("#form-message-update-image").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
-                  "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Result Error !</b>Server error found on the api. Please call the administrator<br>"+
-                  "</div>");
-            }
-          },
-          error: function (xhr, status, error) {
-            if(xhr.status==200){ 
-              $("#form-message-update-image").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
-                  "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Api Error !</b>Server error found on the api. Please call the administrator<br>"+
-                  "</div>");
-            }else{ console.log(xhr.responseText); }
-          }
-       });
-    }
-    else{ alert("Please select a file."); }
-  }
-
-  var doc = new jsPDF();
-  var specialElementHandlers = { '#editor': function (element, renderer) { return true; } };
-  $('#printOrder').click(function () {   
-      doc.fromHTML($('#update-form-Details').html(), 15, 15, { 'width': 170, 'elementHandlers': specialElementHandlers });
-      doc.save('sample-order.pdf');
-  });
 
   //window.onload = function() { loadGridItems(); };
 </script>

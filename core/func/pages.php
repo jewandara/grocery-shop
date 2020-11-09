@@ -30,16 +30,13 @@ foreach ($dbpages as $page){
 	$_TR.= "
 	<tr>
 	<td><b>".$page['id']."</b></td>
-	<td><a href='".$_DOMAIN."page/index.php?id=".$page['id']."'>/".$page['page']."</a></td>";
-	if($page['private']==0){ $_TR.= "<td><a class='btn btn-success'>Public</a></td>"; }
-	else{ $_TR.= "<td><a class='btn btn-danger'>Private</a></td>"; }
-	$_TR.= "
-	<td>
-	<a href='".$_DOMAIN."admin_page/index.php?id=".$page['id']."'><i class='fa fa-pencil-square-o'></i></a>
-	<a href='".$_DOMAIN.$page['page']."' target='_blank'><i class='fa fa-pencil-square-o'></i></a>
-	</td>
-	</tr>";
+	<td><a href='".$_DOMAIN.$page['page']."'>/".$page['page']."</a></td>";
+	if($page['private']==0){ $_TR.= "<td><a class='label success'>Public</a></td>"; }
+	else{ $_TR.= "<td><a class='label danger'>Private</a></td>"; }
+	$_TR.= "</tr>";
 }
+
+
 
 $ERROR_MESSAGE = resultBlock($_ERRORS,$_SUCCESS);
 
