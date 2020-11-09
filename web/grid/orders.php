@@ -18,7 +18,7 @@ function orders($WHERE, $ORDER, $LIMIT)
 function numberCount($WHERE)
 {
     global $_SQL, $_PREFIX; 
-    $Q = "SELECT COUNT(gs_orders.id) FROM ".$_PREFIX."orders, ".$_PREFIX."customers WHERE ".$WHERE;
+    $Q = "SELECT COUNT(gs_orders.id) FROM ".$_PREFIX."orders, ".$_PREFIX."customers WHERE (gs_orders.cust_id = gs_customers.id) AND ".$WHERE;
 	$result = mysqli_query($_SQL, $Q);
 	return (mysqli_fetch_array($result))[0];
 }
