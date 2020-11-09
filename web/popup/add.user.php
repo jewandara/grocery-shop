@@ -1,8 +1,8 @@
-<div class='gs-popup-window' id='addNewItem'>
+<div class='gs-popup-window' id='addNewUser'>
   <div class='gs-popup-window-content'>
     <div class='gs-popup-window-header'>
       <h1 class='gs-large'><span class='gs-popup-close'>&times;</span></h1>
-      <h1 class='gs-large'><i class='fa fa-plus-square'></i> ADD NEW ITEM</h5>
+      <h1 class='gs-large'><i class='fa fa-plus-square'></i> ADD NEW LOGIN USER</h5>
         <hr>
     </div>
     <div class='gs-popup-window-body'>
@@ -40,96 +40,58 @@
       </style>
 
       <div class='container'>
-        <form id='item-form'>
+        <form id='add-form'>
+            <div class='row'>
+              <div class='col-25'>
+                <label for='username'>Username : </label>
+              </div>
+              <div class='col-75'>
+                <input type='text' name='username' placeholder='Type user login username here' class='form-control' >
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-25'>
+                <label for='contact'>Contact : </label>
+              </div>
+              <div class='col-75'>
+                <input type='text' name='contact' placeholder='Type user contact number here' class='form-control' >
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-25'>
+                <label for='firstname'>First Name : </label>
+              </div>
+              <div class='col-75'>
+                <input type='text' name='firstname' placeholder='Type user first name here' class='form-control' >
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-25'>
+                <label for='lastname'>Last Name : </label>
+              </div>
+              <div class='col-75'>
+                <input type='text' name='lastname' placeholder='Type user last name here' class='form-control' >
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-25'>
+                <label for='email'>Email : </label>
+              </div>
+              <div class='col-75'>
+                <input type='text' name='email' placeholder='Type customer email here' class='form-control' >
+              </div>
+            </div>
 
-            <div class='row'>
-              <div class='col-25'>
-                <label for='category'>Category : </label>
-              </div>
-              <div class='col-75'>
-                <select name='category' class='form-control gs-button gs-grey' style='width: 100%; padding: 10px' >
-                  <option class='gs-hover-white' value=''> - select category - </option>
-                  <option class='gs-hover-white' value='Vegetables'>Vegetables</option>
-                  <option class='gs-hover-white' value='Fruits'>Fruits</option>
-                  <option class='gs-hover-white' value='Dairy'>Dairy</option>
-                  <option class='gs-hover-white' value='Foods'>Foods</option>
-                  <option class='gs-hover-white' value='Meats'>Meats</option>
-                  <option class='gs-hover-white' value='Beverages'>Beverages</option>
-                  <option class='gs-hover-white' value='Household'>Household</option>
-                  <option class='gs-hover-white' value='Baby'>Baby</option>
-                  <option class='gs-hover-white' value='Freezer'>Freezer</option>
-                </select>
-              </div>
-            </div>
-            <div class='row'>
-              <div class='col-25'>
-                <label for='name'>Name : </label>
-              </div>
-              <div class='col-75'>
-                <input type='text' name='name' placeholder='Type your item name here' class='form-control' >
-              </div>
-            </div>
-            <div class='row'>
-              <div class='col-25'>
-                <label for='quantity'>Quantity : </label>
-              </div>
-              <div class='col-75'>
-                <input type='text' name='quantity' placeholder='Type your quantity for a unit, here' class='form-control' >
-              </div>
-            </div>
-            <div class='row'>
-              <div class='col-25'>
-                <label for='unit'>Unit : </label>
-              </div>
-              <div class='col-75'>
-                <select name='unit' class='form-control gs-button gs-grey' style='width: 100%; padding: 10px' >
-                  <option class='gs-hover-white' value=''> - select unit - </option>
-                  <option class='gs-hover-white' value='No'>No</option>
-                  <option class='gs-hover-white' value='Kg'>Kg</option>
-                  <option class='gs-hover-white' value='g'>g</option>
-                  <option class='gs-hover-white' value='Km'>Km</option>
-                  <option class='gs-hover-white' value='m'>m</option>
-                  <option class='gs-hover-white' value='cm'>cm</option>
-                  <option class='gs-hover-white' value='mm'>mm</option>
-                  <option class='gs-hover-white' value='l'>l</option>
-                  <option class='gs-hover-white' value='ml'>ml</option>
-                </select>
-              </div>
-            </div>
-            <div class='row'>
-              <div class='col-25'>
-                <label for='price'>Price (LKR) : </label>
-              </div>
-              <div class='col-75'>
-                <input type='text' name='price' placeholder='Type your price for a unit here' class='form-control' >
-              </div>
-            </div>
-            <div class='row'>
-              <div class='col-25'>
-                <label for='stock'>Stock : </label>
-              </div>
-              <div class='col-75'>
-                <input type='text' name='stock' placeholder='Type your stock value here' class='form-control' >
-              </div>
-            </div>
-            <div class='row'>
-              <div class='col-25'>
-                <label for='alert'>Stock Alert : </label>
-              </div>
-              <div class='col-75'>
-                <input type='text' name='alert' placeholder='Type your minimum stock value for a alert' class='form-control' >
-              </div>
-            </div>
             <div class='row'>
               <div class='col-25'>
                 <label for='message'></label>
               </div>
-              <div class='col-75' id='form-message'>
+              <div class='col-75' id='form-message-add'>
               </div>
             </div>
             <div class='row'>
               <br>
-              <input type='submit' value='SUBMIT' onclick='validateForm()'>
+              <input type='submit' value='SUBMIT' onclick='validateAddForm()'>
             </div>
         </form>
       </div>
@@ -141,83 +103,96 @@
 </div>
 
 <script type="text/javascript">
-  function validateForm() {
-    $("#item-form").validate({
+
+  function onloadAddForm() { 
+    $('#form-message-add').prepend(); 
+    $("#form-message-add").empty(); 
+    console.log("Data Removed");
+  }
+
+  function validateAddForm() {
+    $("#add-form").validate({
       debug: true,
       rules: {
-        category:{ required: true },
-        name:{ required: true, minlength: 3 },
-        quantity:{ required: true, number: true },
-        unit:{ required: true },
-        price:{ required: true, number: true },
-        stock:{ required: true, number: true },
-        //email: { required: true, email: true },
-        //password: { required: true, minlength: 5 }
+        username:{ required: true, minlength: 4 },
+        contact:{ required: true, number: true, minlength: 9 },
+        firstname:{ required: true, minlength: 3 },
+        lastname:{ required: true, minlength: 3 },
+        email:{ required: true, email: true }
       },
       messages: {
-        category: { required: "Please select the item category" },
-        name: { required: "Please type the item name", minlength: "Need more than 3 letters" },
-        quantity: { required: "Please add the quantity", number: "Need number value"  },
-        unit: { required: "Please select the unit" },
-        price: { required: "Please type the price", number: "Need number value"  },
-        stock: { required: "Please type the stock value", number: "Need number value"  }
-        //password: { required: "Please provide a password", minlength: "Your password must be at least 5 characters long" },
-        //email: "Please enter a valid email address"
+        username: { required: "Please type username", minlength: "Need more than 4 letters" },
+        contact: { required: "Please type contact number", number: "Contact number is not a string value", minlength: "Need more than 9 letters" },
+        firstname: { required: "Please type first name", minlength: "Need more than 3 letters" },
+        lastname: { required: "Please type last name", minlength: "Need more than 3 letters" },
+        email: { required: "Please type the email address", email: "Invalid email address" }
       },
       errorPlacement: function(error, element) {
-          /* console.log(element); console.log(error); */
-          var placement = $(element).data('error');
-          if (placement) {  $(placement).append(error); } 
-          else {  error.insertAfter(element); }
+        console.log(error);
+        var placement = $(element).data('error');
+        if (placement) {  $(placement).append(error); } 
+        else {  error.insertAfter(element); }
       },
-      submitHandler: function(form) { submitForm(); /*console.log("No Errors, Submitting The Form"); */ }
+      submitHandler: function(form) { 
+        console.log("No Errors, Submitting The Form");
+        submitAddForm();
+      }
     });
   }
 
-
-
-  function submitForm() {
+  function submitAddForm() {
+  	$("#form-message-add").append("<img src='<?=$_DOMAIN?>images/loader.gif'>");
     var formData = '{ '+
-          '"category" : "'+$('input[name=category]').val() + '",' +
-          '"name" : "'+$('input[name=name]').val() + '",' +
-          '"test" : "trst"' +
+          '"username" : "'+$('input[name=username]').val() + '",' +
+          '"contact" : "'+$('input[name=contact]').val() + '",' +
+          '"first_name" : "'+$('input[name=firstname]').val() + '",' +
+          '"last_name" : "'+$('input[name=lastname]').val() + '",' +
+          '"email" : "'+$('input[name=email]').val() + '"' +
       '}';
-    //console.log(formData);
-    var jsonFormData = jQuery.parseJSON(formData);
-    //console.log(jsonFormData);
-
+    console.log(formData);
+    var jsonData = jQuery.parseJSON(formData);
+    console.log(jsonData);
+    console.log('<?=$_DOMAIN?>api/json/addUser/');
     $.ajax({
           type        : 'POST',
-          url         : '<?=$_DOMAIN?>api/json/item',
-          data        : jsonFormData,
+          contentType : "application/json; charset=utf-8",
+          url         : '<?=$_DOMAIN?>api/json/addUser/',
+          data        : JSON.stringify(jsonData),
           dataType    : 'json',
-          encode      : true,
+          encode      : false,
           success: function (response, status, xhr) {
+            console.log(response);
             if((xhr.status==200) && (status=="success")){
               if(response["error"]==false){
-                $("#form-message").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
+              	$("#form-message-add").empty();
+                $("#form-message-add").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
                   "<i class='start-icon fa fa-check-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Successfully !</b>New recode added successfully.<br> "+response['message']+
+                    "<b>ID</b> "+response['result']+" <br> "+
+                    "<b>Successfully !</b>New recode added successfully. "+
                   "</div>");
-                document.getElementById("item-form").reset();
+                document.getElementById("add-form").reset();
+                $('label.error').css('display', 'none');
               }else{
-                $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+              	$("#form-message-add").empty();
+                $("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>New record is not updated. Please call the administrator<br>"+
+                    "<b>Error !</b> "+response['result']+"<br>"+
                   "</div>");
               }
             }else{
-              $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+            	$("#form-message-add").empty();
+              	$("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>Server error found on the api. Please call the administrator<br>"+
+                    "<b>Result Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
             }
           },
           error: function (xhr, status, error) {
             if(xhr.status==200){ 
-              $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+            	$("#form-message-add").empty();
+              	$("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>Server error found on the api. Please call the administrator<br>"+
+                    "<b>Api Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
             }else{ console.log(xhr.responseText); }
           }
@@ -225,6 +200,4 @@
     event.preventDefault();
   }
  
-
-  //window.onload = function() {  };
 </script>

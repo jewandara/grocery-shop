@@ -1,6 +1,6 @@
 
-
 <?php securePage($_SERVER['PHP_SELF']); ?>
+
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
     <p>
@@ -36,7 +36,7 @@
               <label for='site'>Site Name : </label>
             </div>
             <div class="col-75">
-              <input type='text' name='<?="settings[".$settings['SITE']['id']."]"?>' value='<?=$CONFIG_SITE?>' placeholder='Website name here' class='form-control' >
+              <input type='text' name='<?="settings[".$settings['SITE']['id']."]"?>' value='<?=$CONFIG_SITE?>' placeholder='Website name here' class='form-control'  style="background-color: #cdcccf" readonly>
             </div>
           </div>
           <div class="row">
@@ -44,7 +44,7 @@
               <label for='domain'>Domain Name : </label>
             </div>
             <div class="col-75">
-              <input type='text' name='<?="settings[".$settings['DOMAIN']['id']."]"?>' value='<?=$CONFIG_DOMAIN?>' placeholder='Domain name here' class='form-control' >
+              <input type='text' name='<?="settings[".$settings['DOMAIN']['id']."]"?>' value='<?=$CONFIG_DOMAIN?>' placeholder='Domain name here' class='form-control'  style="background-color: #cdcccf" readonly>
             </div>
           </div>
           <div class="row">
@@ -52,7 +52,7 @@
               <label for='protocol'>Protocol Name : </label>
             </div>
             <div class="col-75">
-              <input type='text' name='<?="settings[".$settings['PROTOCOL']['id']."]"?>' value='<?=$CONFIG_PROTOCOL?>' placeholder='Protocol name here' class='form-control' >
+              <input type='text' name='<?="settings[".$settings['PROTOCOL']['id']."]"?>' value='<?=$CONFIG_PROTOCOL?>' placeholder='Protocol name here' class='form-control'  style="background-color: #cdcccf" readonly>
             </div>
           </div>
           <div class="row">
@@ -60,7 +60,7 @@
               <label for='path'>Path Name : </label>
             </div>
             <div class="col-75">
-              <input type='text' name='<?="settings[".$settings['PATH']['id']."]"?>' value='<?=$CONFIG_PATH?>' placeholder='Path name here' class='form-control' >
+              <input type='text' name='<?="settings[".$settings['PATH']['id']."]"?>' value='<?=$CONFIG_PATH?>' placeholder='Path name here' class='form-control'  style="background-color: #cdcccf" readonly>
             </div>
           </div>
           <div class="row">
@@ -68,7 +68,7 @@
               <label for='url'>Url Name : </label>
             </div>
             <div class="col-75">
-              <input type='text' name='<?="settings[".$settings['URL']['id']."]"?>' value='<?=$CONFIG_URL?>' placeholder='Url name here' class='form-control' >
+              <input type='text' name='<?="settings[".$settings['URL']['id']."]"?>' value='<?=$CONFIG_URL?>' placeholder='Url name here' class='form-control'  style="background-color: #cdcccf" readonly>
             </div>
           </div>
           <div class="row">
@@ -146,9 +146,19 @@
               <input type='text' name='<?="settings[".$settings['GMAIL']['id']."]"?>' value='<?=$CONFIG_GMAIL?>' placeholder='Type web url here' class="form-control" >
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="gmail">Gmail Password : </label>
+            </div>
+            <div class="col-75">
+              <input type='text' name='<?="settings[".$settings['MAILPASS']['id']."]"?>' value='<?=$CONFIG_MAILPASS?>' placeholder='Type web url here' class="form-control" >
+            </div>
+          </div>
+
           <div class="row">
             <br>
-            <input type="submit" value="SUBMIT">
+            <!-- <input type="submit" value="SUBMIT"> -->
           </div>
       </div>
       <?=($ERROR_MESSAGE != "")?$ERROR_MESSAGE:""?>
@@ -182,54 +192,3 @@
     All Rights Reserved.</p>
   </footer>
 </div>
-
-<script type="text/javascript">
-  function formatCustomers (d) {
-    return 'Full name: '+d.name+' '+d.code+'<br>'+
-        'Salary: '+d.position+'<br>'+
-        'The child row can contain any data you wish, including links, images, inner tables etc.';
-  }
-                 
-  function loadGridCustomers() {
-      var dt = $('#customers').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax": { "url": "<?=$_DOMAIN?>api/grid/customers/", "type": "POST" },
-          "columns": [
-              { "class": "details-control", "orderable": false, "data": null, "defaultContent": "" },
-              { "data": "name" },
-              { "data": "contact" },
-              { "data": "email" },
-              { "data": "address" },
-              { "data": "gps" },
-              { "data": "link" }
-          ],
-          "order": [[1, 'asc']]
-      } );
-
-      // Array to track the ids of the details displayed rows
-      var detailRows = [];
-      $('#customers tbody').on( 'click', 'tr td.details-control', function () {
-          var tr = $(this).closest('tr');
-          var row = dt.row( tr );
-          var idx = $.inArray( tr.attr('id'), detailRows );
-          if ( row.child.isShown() ) {
-              tr.removeClass('details');
-              row.child.hide();
-              detailRows.splice(idx,1);
-          }
-          else {
-              tr.addClass( 'details' );
-              row.child(formatCustomers(row.data())).show();
-              if ( idx === -1 ) { detailRows.push(tr.attr('id')); }
-          }
-      } );
-      dt.on( 'draw', function () {
-          $.each( detailRows, function ( i, id ) {
-              $('#'+id+' td.details-control').trigger( 'click' );
-          } );
-      } );
-  }
-
-  window.onload = function() { loadGridCustomers(); };
-</script>

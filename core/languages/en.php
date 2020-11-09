@@ -13,7 +13,7 @@ $lang = array_merge($lang,array(
 	"ACCOUNT_USER_OR_PASS_INVALID"		=> "Username or password is invalid",
 	"ACCOUNT_ALREADY_ACTIVE"		=> "Account is already activated",
 	"ACCOUNT_INACTIVE"			=> "Your account is not active.<br>* Check your emails for activation.<br>* <a href='%m1%'>Click here to resend activation email.</a>",
-	"ACCOUNT_USER_CHAR_LIMIT"		=> "Contact number must be between %m1% and %m2% characters",
+	"ACCOUNT_USER_CHAR_LIMIT"		=> "Username must be between %m1% and %m2% characters",
 	"EMPTY_STRING_CHAR_LIMIT"		=> "%m1% cannot be empty",
 	"ACCOUNT_FIRST_NAME_CHAR_LIMIT"		=> "Your First name must be between %m1% and %m2% characters",
 	"ACCOUNT_LAST_NAME_CHAR_LIMIT"		=> "Your Last name must be between %m1% and %m2% characters",

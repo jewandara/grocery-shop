@@ -13,8 +13,9 @@ if(!empty($_JSON["cust_id"])){
 	if(!empty($_JSON["last_name"])){ $_SET.=", last_name = '".strval($_JSON["last_name"])."' "; }
 	if(!empty($_JSON["email"])){ $_SET.=", email = '".strval($_JSON["email"])."' "; }
 	if(!empty($_JSON["contact"])){ $_SET.=", contact = '".strval($_JSON["contact"])."' "; }
-	if(!empty($_JSON["lost_password_request"])){ $_SET.=", lost_password_request = ".strval($_JSON["lost_password_request"])." "; }
-	if(!empty($_JSON["active"])){ $_SET.=", active = ".strval($_JSON["active"])." "; }
+	if(!empty($_JSON["address"])){ $_SET.=", address = '".strval($_JSON["address"])."' "; }
+	if(!empty($_JSON["latitude"])){ $_SET.=", latitude = ".strval($_JSON["latitude"])." "; }
+	if(!empty($_JSON["longitude"])){ $_SET.=", longitude = ".strval($_JSON["longitude"])." "; }
 
 	updateCustomer($_JSON["cust_id"], $_SET);
 	$_RESULT = new stdClass();
@@ -27,7 +28,7 @@ if(!empty($_JSON["cust_id"])){
 	$_RESULT = new stdClass();
 	$_RESULT->error = true;
 	$_RESULT->message = "error";
-	$_RESULT->result = "Username can not null";
+	$_RESULT->result = "Customer id can not be null value";
 	echo json_encode($_RESULT);
 }
 

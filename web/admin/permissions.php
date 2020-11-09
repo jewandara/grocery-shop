@@ -109,7 +109,7 @@
         <thead>
           <tr>
               <th width='10px'><i class='fa fa-address-card-o gs-xlarge'></i></th>
-              <th>Last name</th>
+              <th>Permission Name</th>
               <th width='10px'><i class="fa fa-braille gs-xlarge"></i></th>
           </tr>
         </thead>

@@ -1,14 +1,27 @@
 <?php
 
+	function randomPassword() {
+	    $alphabet = "abcdefghijklmnopqrstuwxyz@#$&*ABCDEFGHIJKLMNOPQRSTUWXYZ0123456789@#$&*";
+	    $pass = array();
+	    $alphaLength = strlen($alphabet) - 1;
+	    for ($i = 0; $i < 10; $i++) {
+	        $n = rand(0, $alphaLength);
+	        $pass[] = $alphabet[$n];
+	    }
+	    return implode($pass);
+	}
+
+	$genaratedPass = randomPassword();
 	$username = trim($_JSON["username"]);
 	$contact = trim($_JSON["contact"]);
-	$password = trim($_JSON["contact"]);
-	$pass_confirm = trim($_JSON["contact"]);
+	$password = trim($genaratedPass);
+	$pass_confirm = trim($genaratedPass);
 	$firstname = trim($_JSON["first_name"]);
 	$lastname = trim($_JSON["last_name"]);
 	$email = trim($_JSON["email"]);
 
 	
+
 	$valid_chars = array('-', '_', ' ', '.');
 	if($firstname=="") { $_ERRORS[] = lang("EMPTY_STRING_CHAR_LIMIT", array("First name")); }
 	else{ 
@@ -28,8 +41,8 @@
 	}
 
 	//if ($captcha != $_SESSION['captcha']) { $_ERRORS[] = lang("CAPTCHA_FAIL"); }
-	if($username=="") { $_ERRORS[] = lang("EMPTY_STRING_CHAR_LIMIT", array("Contact number")); }
-	else{ if(minMaxRange(7,15, $username)) { $_ERRORS[] = lang("ACCOUNT_USER_CHAR_LIMIT",array(7,15)); } }
+	if($username=="") { $_ERRORS[] = lang("EMPTY_STRING_CHAR_LIMIT", array("Username")); }
+	else{ if(minMaxRange(4,15, $username)) { $_ERRORS[] = lang("ACCOUNT_USER_CHAR_LIMIT",array(4,15)); } }
 
 	if($password=="") { $_ERRORS[] = lang("EMPTY_STRING_CHAR_LIMIT", array("Password")); }
 	else{ 

@@ -65,30 +65,6 @@
   <div class='gs-container' style='padding:32px'>
     <div class='gs-row-padding gs-margin-bottom'>
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-file-code-o"></i>  Page Grid View</b></h5>
-      <!--       
-      <header class='gs-container' style='padding-top:22px; padding-bottom:20px'>
-        <p class='gs-grid-button-add-new'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-green' id='popupButton'> <i class='fa fa-plus'></i> Add New</button>
-        </p>
-        <p class='gs-grid-button-download-excel'>
-          <button class='gs-button-gird gs-button gs-light-grey gs-hover-black'><i class='fa fa-download'></i> Download Excel</button>
-        </p>
-        <p class='gs-grid-button-search-by'>
-          <select class='gs-button-gird gs-button gs-light-grey gs-hover-grey' >
-            <option class='gs-hover-white' value="0">Search By</option>
-            <option class='gs-hover-white' value="Vegetables">Vegetables</option>
-            <option class='gs-hover-white' value="Fruits">Fruits</option>
-            <option class='gs-hover-white' value="Dairy">Dairy</option>
-            <option class='gs-hover-white' value="Foods">Foods</option>
-            <option class='gs-hover-white' value="Meats">Meats</option>
-            <option class='gs-hover-white' value="Beverages">Beverages</option>
-            <option class='gs-hover-white' value="Household">Household</option>
-            <option class='gs-hover-white' value="Baby">Baby</option>
-            <option class='gs-hover-white' value="Freezer">Freezer</option>
-          </select>
-        </p>
-      </header>
-      -->
       <style>
         table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }
         th { border: 1px solid #000; background-color:#000; text-align: left; padding: 8px; color:#fff; }
@@ -113,12 +89,9 @@
     <hr>
   </div>
 
-
-
   <div class='gs-container gs-padding-16 gs-card' style='background-color:#eee'>
     <h3 class='gs-center'>Grocery Shop Web Application</h3>
     <div class='gs-content' style='max-width:800px'>
-      <!-- <img src='./images/footer-image.png' style='width:98%;margin:20px 0' alt='Blog Template'><br> -->
       <div class='gs-row'>
         <div class='gs-col m6'>
           <a class='gs-button gs-padding-large gs-dark-grey' style='width:98.5%'>

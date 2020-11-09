@@ -1,8 +1,8 @@
-<div class='gs-popup-window' id='addNewItem'>
+<div class='gs-popup-window' id='addNewCustomer'>
   <div class='gs-popup-window-content'>
     <div class='gs-popup-window-header'>
       <h1 class='gs-large'><span class='gs-popup-close'>&times;</span></h1>
-      <h1 class='gs-large'><i class='fa fa-plus-square'></i> ADD NEW ITEM</h5>
+      <h1 class='gs-large'><i class='fa fa-plus-square'></i> ADD NEW CUSTOMER</h5>
         <hr>
     </div>
     <div class='gs-popup-window-body'>
@@ -40,96 +40,73 @@
       </style>
 
       <div class='container'>
-        <form id='item-form'>
-
+        <form id='add-form'>
             <div class='row'>
               <div class='col-25'>
-                <label for='category'>Category : </label>
+                <label for='cxfirst'>First Name : </label>
               </div>
               <div class='col-75'>
-                <select name='category' class='form-control gs-button gs-grey' style='width: 100%; padding: 10px' >
-                  <option class='gs-hover-white' value=''> - select category - </option>
-                  <option class='gs-hover-white' value='Vegetables'>Vegetables</option>
-                  <option class='gs-hover-white' value='Fruits'>Fruits</option>
-                  <option class='gs-hover-white' value='Dairy'>Dairy</option>
-                  <option class='gs-hover-white' value='Foods'>Foods</option>
-                  <option class='gs-hover-white' value='Meats'>Meats</option>
-                  <option class='gs-hover-white' value='Beverages'>Beverages</option>
-                  <option class='gs-hover-white' value='Household'>Household</option>
-                  <option class='gs-hover-white' value='Baby'>Baby</option>
-                  <option class='gs-hover-white' value='Freezer'>Freezer</option>
-                </select>
+                <input type='text' name='cxfirst' placeholder='Type customer first name here' class='form-control' >
               </div>
             </div>
             <div class='row'>
               <div class='col-25'>
-                <label for='name'>Name : </label>
+                <label for='cxlast'>Last Name : </label>
               </div>
               <div class='col-75'>
-                <input type='text' name='name' placeholder='Type your item name here' class='form-control' >
+                <input type='text' name='cxlast' placeholder='Type customer last name here' class='form-control' >
               </div>
             </div>
             <div class='row'>
               <div class='col-25'>
-                <label for='quantity'>Quantity : </label>
+                <label for='cxcontact'>Contact : </label>
               </div>
               <div class='col-75'>
-                <input type='text' name='quantity' placeholder='Type your quantity for a unit, here' class='form-control' >
+                <input type='text' name='cxcontact' placeholder='Type customer contact number here' class='form-control' >
               </div>
             </div>
             <div class='row'>
               <div class='col-25'>
-                <label for='unit'>Unit : </label>
+                <label for='cxemail'>Email : </label>
               </div>
               <div class='col-75'>
-                <select name='unit' class='form-control gs-button gs-grey' style='width: 100%; padding: 10px' >
-                  <option class='gs-hover-white' value=''> - select unit - </option>
-                  <option class='gs-hover-white' value='No'>No</option>
-                  <option class='gs-hover-white' value='Kg'>Kg</option>
-                  <option class='gs-hover-white' value='g'>g</option>
-                  <option class='gs-hover-white' value='Km'>Km</option>
-                  <option class='gs-hover-white' value='m'>m</option>
-                  <option class='gs-hover-white' value='cm'>cm</option>
-                  <option class='gs-hover-white' value='mm'>mm</option>
-                  <option class='gs-hover-white' value='l'>l</option>
-                  <option class='gs-hover-white' value='ml'>ml</option>
-                </select>
+                <input type='text' name='cxemail' placeholder='Type customer email address here' class='form-control' >
               </div>
             </div>
             <div class='row'>
               <div class='col-25'>
-                <label for='price'>Price (LKR) : </label>
+                <label for='cxaddress'>Address : </label>
               </div>
               <div class='col-75'>
-                <input type='text' name='price' placeholder='Type your price for a unit here' class='form-control' >
+                <input type='text' name='cxaddress' placeholder='Type customer address here' class='form-control' >
               </div>
             </div>
             <div class='row'>
               <div class='col-25'>
-                <label for='stock'>Stock : </label>
+                <label for='cxlongitude'>Longitude : </label>
               </div>
               <div class='col-75'>
-                <input type='text' name='stock' placeholder='Type your stock value here' class='form-control' >
+                <input type='text' name='cxlongitude' placeholder='Type customer location Longitude here' class='form-control' >
               </div>
             </div>
             <div class='row'>
               <div class='col-25'>
-                <label for='alert'>Stock Alert : </label>
+                <label for='cxlatitude'>Latitude : </label>
               </div>
               <div class='col-75'>
-                <input type='text' name='alert' placeholder='Type your minimum stock value for a alert' class='form-control' >
+                <input type='text' name='cxlatitude' placeholder='Type customer location latitude here' class='form-control' >
               </div>
             </div>
             <div class='row'>
               <div class='col-25'>
                 <label for='message'></label>
               </div>
-              <div class='col-75' id='form-message'>
+              <div class='col-75' id='form-message-add'>
               </div>
             </div>
             <div class='row'>
               <br>
-              <input type='submit' value='SUBMIT' onclick='validateForm()'>
+              <input type='submit' value='SUBMIT' onclick='validateAddForm()'>
             </div>
         </form>
       </div>
@@ -141,83 +118,97 @@
 </div>
 
 <script type="text/javascript">
-  function validateForm() {
-    $("#item-form").validate({
+
+  function onloadAddForm() { 
+    $('#form-message-add').prepend(); 
+    $("#form-message-add").empty(); 
+    console.log("Data Removed");
+  }
+
+  function validateAddForm() {
+    $("#add-form").validate({
       debug: true,
       rules: {
-        category:{ required: true },
-        name:{ required: true, minlength: 3 },
-        quantity:{ required: true, number: true },
-        unit:{ required: true },
-        price:{ required: true, number: true },
-        stock:{ required: true, number: true },
-        //email: { required: true, email: true },
-        //password: { required: true, minlength: 5 }
+        cxfirst:{ required: true, minlength: 3 },
+        cxlast:{ required: true, minlength: 3 },
+        cxcontact:{ required: true, number: true, minlength: 9 },
+        cxemail:{ required: true, email: true },
+        cxaddress:{ required: true, minlength: 10 },
+        cxlongitude:{ number: true },
+        cxlatitude:{ number: true }
       },
       messages: {
-        category: { required: "Please select the item category" },
-        name: { required: "Please type the item name", minlength: "Need more than 3 letters" },
-        quantity: { required: "Please add the quantity", number: "Need number value"  },
-        unit: { required: "Please select the unit" },
-        price: { required: "Please type the price", number: "Need number value"  },
-        stock: { required: "Please type the stock value", number: "Need number value"  }
-        //password: { required: "Please provide a password", minlength: "Your password must be at least 5 characters long" },
-        //email: "Please enter a valid email address"
+        cxfirst: { required: "Please type first name", minlength: "Need more than 3 letters" },
+        cxlast: { required: "Please type last name", minlength: "Need more than 3 letters" },
+        cxcontact: { required: "Please type contact number", number: "Contact number is not a string value", minlength: "Need more than 9 numbers"  },
+        cxemail: { required: "Please type email address", email: "Invalid email address" },
+        cxaddress: { required: "Please type the address", minlength: "Need more than 10 letters"  },
+        cxlongitude: { number: "Need number value"  },
+        cxlatitude: { number: "Need number value"  }
       },
       errorPlacement: function(error, element) {
-          /* console.log(element); console.log(error); */
-          var placement = $(element).data('error');
-          if (placement) {  $(placement).append(error); } 
-          else {  error.insertAfter(element); }
+        console.log(error);
+        var placement = $(element).data('error');
+        if (placement) {  $(placement).append(error); } 
+        else {  error.insertAfter(element); }
       },
-      submitHandler: function(form) { submitForm(); /*console.log("No Errors, Submitting The Form"); */ }
+      submitHandler: function(form) { 
+        console.log("No Errors, Submitting The Form");
+        submitAddForm();
+      }
     });
   }
 
-
-
-  function submitForm() {
+  function submitAddForm() {
     var formData = '{ '+
-          '"category" : "'+$('input[name=category]').val() + '",' +
-          '"name" : "'+$('input[name=name]').val() + '",' +
-          '"test" : "trst"' +
+          '"first_name" : "'+$('input[name=cxfirst]').val() + '",' +
+          '"last_name" : "'+$('input[name=cxlast]').val() + '",' +
+          '"contact" : "'+$('input[name=cxcontact]').val() + '",' +
+          '"email" : "'+$('input[name=cxemail]').val() + '",' +
+          '"address" : "'+$('input[name=cxaddress]').val() + '",' +
+          '"longitude" : "'+$('input[name=cxlongitude]').val() + '",' +
+          '"latitude" : "'+$('input[name=cxlatitude]').val() + '"' +
       '}';
-    //console.log(formData);
-    var jsonFormData = jQuery.parseJSON(formData);
-    //console.log(jsonFormData);
-
+    console.log(formData);
+    var jsonData = jQuery.parseJSON(formData);
+    console.log(jsonData);
+    console.log('<?=$_DOMAIN?>api/json/addCustomer/');
     $.ajax({
           type        : 'POST',
-          url         : '<?=$_DOMAIN?>api/json/item',
-          data        : jsonFormData,
+          contentType : "application/json; charset=utf-8",
+          url         : '<?=$_DOMAIN?>api/json/addCustomer/',
+          data        : JSON.stringify(jsonData),
           dataType    : 'json',
-          encode      : true,
+          encode      : false,
           success: function (response, status, xhr) {
+            console.log(response);
             if((xhr.status==200) && (status=="success")){
               if(response["error"]==false){
-                $("#form-message").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
+                $("#form-message-add").append("<div class='alert alert-simple alert-success' style='width: 100%' >"+
                   "<i class='start-icon fa fa-check-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Successfully !</b>New recode added successfully.<br> "+response['message']+
+                    "<b>ID</b> "+response['result']+" <br> "+
+                    "<b>Successfully !</b>New recode added successfully. "+
                   "</div>");
-                document.getElementById("item-form").reset();
+                document.getElementById("add-form").reset();
+                $('label.error').css('display', 'none');
               }else{
-                $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+                $("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>New record is not updated. Please call the administrator<br>"+
+                    "<b>Result Error !</b>New record is not updated. Please call the administrator<br>"+
                   "</div>");
               }
             }else{
-              $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+              $("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>Server error found on the api. Please call the administrator<br>"+
+                    "<b>Result Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
             }
           },
           error: function (xhr, status, error) {
             if(xhr.status==200){ 
-              $("#form-message").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
+              $("#form-message-add").append("<div class='alert alert-simple alert-danger' style='width: 100%' >"+
                   "<i class='start-icon fa fa-times-circle-o faa-times gs-xxlarge' ></i>"+
-                    "<b>Error !</b>Server error found on the api. Please call the administrator<br>"+
+                    "<b>Api Error !</b>Server error found on the api. Please call the administrator<br>"+
                   "</div>");
             }else{ console.log(xhr.responseText); }
           }
@@ -225,6 +216,4 @@
     event.preventDefault();
   }
  
-
-  //window.onload = function() {  };
 </script>

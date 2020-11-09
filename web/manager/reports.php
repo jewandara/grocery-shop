@@ -1,12 +1,11 @@
 
 <?php
   securePage($_SERVER['PHP_SELF']); 
-  //require_once($_FOLDER.'web/popup/add.new.item.php');
-  //require_once($_FOLDER.'web/popup/add.new.item.php');
-  //require_once($_FOLDER.'web/popup/add.new.item.php');
-  //require_once($_FOLDER.'web/popup/add.new.item.php');
-  //require_once($_FOLDER.'web/popup/add.new.item.php');
+	require_once($_FOLDER.'web/report/daily.income.php');
+	require_once($_FOLDER.'web/report/monthly.income.php');
+	require_once($_FOLDER.'web/report/highest.sales.items.php');
 ?>
+
 <div class='gs-main' style='margin-left:250px;'>
   <div id='topMenuText' class='gs-container gs-top gs-theme gs-large' style='padding:8.2px 10px'>
     <p>
@@ -20,72 +19,52 @@
   <div class='gs-container' style='padding:32px'>
     <div class='gs-row-padding gs-margin-bottom'>
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa fa-line-chart"></i>  Download Grocery Shop Reports</b></h5>
+	  <div class="gs-panel">
+	    <div class="gs-row-padding" style="margin:0 -16px">
+	        <table class="gs-table gs-white" >
+	          <tr>
+	            <td><i class="fa fa-bookmark gs-text-red gs-xxlarge"></i></td>
+	            <td>Grocery Shop Daily Income Report</td>
+	            <td><input type="date" id="DailyIncomeDate" name="DailyIncome"></td>
+	            <td><button class="gs-button-gird gs-button gs-light-grey gs-hover-black" id='DailyIncome'><i class="fa fa-download"></i> Download Report</button></td>
+	          </tr>
+	          <tr>
+	            <td><i class="fa fa-flag gs-text-orange gs-xxlarge"></i></td>
+	            <td>Grocery Shop Forecast Income Report (Daily)</td>
+	            <td><input type="date" id="DailyForecastIncomeDate" name="DailyForecastIncome" value=""></td>
+	            <td><button class="gs-button-gird gs-button gs-light-grey gs-hover-black" id='DailyForecastIncome'><i class="fa fa-download"></i> Download Report</button></td>
+	          </tr>
 
+	          <tr>
+	            <td><i class="fa fa-calendar gs-text-blue gs-xxlarge"></i></td>
+	            <td>Grocery Shop Monthly Income Report</td>
+	            <td><input type="month" id="MonthlyIncomeMonth" name="MonthlyIncome"></td>
+	            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black" id='MonthlyIncome'><i class="fa fa-download"></i> Download Report</div></td>
+	          </tr>
 
-    <div id="pdf-section" style="display:none; font-family:'Segoe UI';float: left;padding: 10px;color:black">  
-        <h2>London</h2>  
-        <p>  
-            London is the capital city of England. It is the most populous city in the United Kingdom,  
-            with a metropolitan area of over 13 million inhabitants.  
-        </p>  
-        <p>  
-            Standing on the River Thames, London has been a major settlement for two millennia,  
-            its history going back to its founding by the Romans, who named it Londinium.  
-        </p>  
-    </div>  
+	          <tr>
+	            <td><i class="fa fa-flag-checkered gs-text-yellow gs-xxlarge"></i></td>
+	            <td>Grocery Shop Forecast Income Report (Monthly)</td>
+	            <td><input type="month" id="MonthlyForecastIncomeMonth" name="MonthlyForecastIncome" value=""></td>
+	            <td><button class="gs-button-gird gs-button gs-light-grey gs-hover-black" id='MonthlyForecastIncome'><i class="fa fa-download"></i> Download Report</button></td>
+	          </tr>
 
-  <div class="gs-panel">
-    <div class="gs-row-padding" style="margin:0 -16px">
-      <div class="gs-twothird">
-        <table class="gs-table gs-white">
-          <tr>
-            <td><i class="fa fa-user gs-text-blue gs-large"></i></td>
-            <td>User Report Monthly</td>
-            <td><button class="gs-button-gird gs-button gs-light-grey gs-hover-black"><i class="fa fa-download"></i> Download Report</button></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-bell gs-text-red gs-large"></i></td>
-            <td>User Report Monthly</td>
-            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black"><i class="fa fa-download"></i> Download Report</div></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-users gs-text-yellow gs-large"></i></td>
-            <td>User Report Monthly</td>
-            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black"><i class="fa fa-download"></i> Download Report</div></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-comment gs-text-red gs-large"></i></td>
-            <td>User Report Monthly</td>
-            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black"><i class="fa fa-download"></i> Download Report</div></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-bookmark gs-text-blue gs-large"></i></td>
-            <td>User Report Monthly</td>
-            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black"><i class="fa fa-download"></i> Download Report</div></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-laptop gs-text-red gs-large"></i></td>
-            <td>User Report Monthly</td>
-            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black"><i class="fa fa-download"></i> Download Report</div></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-share-alt gs-text-green gs-large"></i></td>
-            <td>User Report Monthly</td>
-            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black"><i class="fa fa-download"></i> Download Report</div></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-
-
+	          <tr>
+	            <td><i class="fa fa-bar-chart gs-text-yellow gs-xxlarge"></i></td>
+	            <td>Highest Sales Items Report</td>
+	            <td></td>
+	            <td><div class="gs-button-gird gs-button gs-light-grey gs-hover-black" id='HighestSalesItemsDailyByCatagory'><i class="fa fa-download"></i> Download Report</div></td>
+	          </tr>
+	        </table>
+	    </div>
+	  </div>
     </div>
     <hr>
   </div>
   <div class='gs-container gs-padding-16 gs-card' style='background-color:#eee'>
     <h3 class='gs-center'>Grocery Shop Web Application</h3>
     <div class='gs-content' style='max-width:800px'>
-      <!-- <img src='./images/footer-image.png' style='width:98%;margin:20px 0' alt='Blog Template'><br> -->
+      <img src='./images/footer-image.png' style='width:98%;margin:20px 0' alt='Blog Template'><br>
       <div class='gs-row'>
         <div class='gs-col m6'>
           <a class='gs-button gs-padding-large gs-dark-grey' style='width:98.5%'>
@@ -111,18 +90,40 @@
 </div>
 <script type="text/javascript">
 
-  var doc = new jsPDF();
-  var specialElementHandlers = {
-      '#editor': function (element, renderer) {
-          return true;
-      }
-  };
 
-  $('.gs-button-gird').click(function () {   
-      doc.fromHTML($('#pdf-section').html(), 15, 15, { 'width': 170, 'elementHandlers': specialElementHandlers });
-      doc.save('sample-file.pdf');
+  $('#DailyIncome').on('click',function(){
+  	var DailyIncome = $('input[name=DailyIncome]').val();
+  	console.log(DailyIncome);
+  	if(DailyIncome!=""){ 
+  		callJsonPDFDailyIncome(DailyIncome);
+  	}
   });
 
+  $('#DailyForecastIncome').on('click',function(){
+  	var DailyForecastIncome = $('input[name=DailyForecastIncome]').val();
+  	console.log(DailyForecastIncome);
+  	if(DailyForecastIncome!=""){ 
+  		callJsonPDFDailyForecastIncome(DailyForecastIncome);
+  	}
+  });
 
-  //window.onload = function() { loadGridItems(); };
+  $('#MonthlyIncome').on('click',function(){
+  	var MonthlyIncome = $('input[name=MonthlyIncome]').val();
+  	console.log(MonthlyIncome);
+  	if(MonthlyIncome!=""){ 
+  		callJsonPDFMonthlyIncome(MonthlyIncome);
+  	}
+  });
+
+  $('#MonthlyForecastIncome').on('click',function(){
+  	var MonthlyForecastIncome = $('input[name=MonthlyForecastIncome]').val();
+  	console.log(MonthlyForecastIncome);
+  	if(MonthlyForecastIncome!=""){ 
+  		callJsonPDFForecastMonthlyIncome(MonthlyForecastIncome);
+  	}
+  });
+
+  $('#HighestSalesItemsDailyByCatagory').on('click',function(){
+  	callJsonPDFHighestSalesItemsDailyByCatagory();
+  });
 </script>

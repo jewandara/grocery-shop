@@ -84,6 +84,10 @@ else if($_URL[$_PATH_ARRY_COUNT+1] == "json"){
             require_once($_FOLDER.'web/json/viewOrderDetail.php'); break;
         case 'viewOrderByID':
             require_once($_FOLDER.'web/json/viewOrderByID.php'); break;
+        case 'viewReportOrder':
+            require_once($_FOLDER.'web/json/viewReportOrder.php'); break;
+        case 'viewReportItem':
+            require_once($_FOLDER.'web/json/viewReportItem.php'); break;
         case 'addOrderDetail':
             require_once($_FOLDER.'web/json/addOrderDetail.php'); break;
         case 'viewUser':

@@ -13,7 +13,7 @@ function addCustomers() {
 	return $last_id;
 }
 
-function emailExists($email)
+function cxEmailExists($email)
 {
 	global $_SQL,$_PREFIX;
 	$stmt = $_SQL->prepare("SELECT id FROM ".$_PREFIX."customers WHERE email = ? LIMIT 1");
@@ -25,7 +25,7 @@ function emailExists($email)
 	$stmt->close();
 }
 
-function contactExists($contact)
+function cxContactExists($contact)
 {
 	global $_SQL,$_PREFIX;
 	$stmt = $_SQL->prepare("SELECT id FROM ".$_PREFIX."customers WHERE contact = ? LIMIT 1");
@@ -38,14 +38,14 @@ function contactExists($contact)
 }
 
 
-if(emailExists($_JSON["email"])){
+if(cxEmailExists($_JSON["email"])){
 	$_RESULT = new stdClass();
 	$_RESULT->error = true;
 	$_RESULT->message = "email";
 	$_RESULT->result = "There is an existing customer email address in the database.";
 	echo json_encode($_RESULT);
 }
-else if(contactExists($_JSON["contact"])){
+else if(cxContactExists($_JSON["contact"])){
 	$_RESULT = new stdClass();
 	$_RESULT->error = true;
 	$_RESULT->message = "contact";

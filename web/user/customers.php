@@ -13,9 +13,6 @@
   <header class='gs-container gs-theme' style='padding:32px 24px'>
     <h1 class='gs-xxxlarge'><i class='fa fa-smile-o'></i>CUSTOMERS</h1>
   </header>
-
-
-
   <div class='gs-container' style='padding:32px'>
     <div class='gs-row-padding gs-margin-bottom'>
       <h5 style="float:left;box-sizing: border-box; "><b><i class="fa fa-smile-o"></i>  Customer Grid View</b></h5>
@@ -26,22 +23,7 @@
         <p class='gs-grid-button-download-excel'>
           <button class='gs-button-gird gs-button gs-light-grey gs-hover-black' onclick='downloadToExcel()'><i class='fa fa-download'></i> Download Excel</button>
         </p>
-<!--         <p class='gs-grid-button-search-by'>
-          <select class='gs-button-gird gs-button gs-light-grey gs-hover-grey' id='dropdownGridSerchBy' onchange='serchByDropDown()'>
-            <option class='gs-hover-white' value="all">Search By All Category</option>
-            <option class='gs-hover-white' value="Vegetables">Vegetables</option>
-            <option class='gs-hover-white' value="Fruits">Fruits</option>
-            <option class='gs-hover-white' value="Dairy">Dairy</option>
-            <option class='gs-hover-white' value="Foods">Foods</option>
-            <option class='gs-hover-white' value="Meats">Meats</option>
-            <option class='gs-hover-white' value="Beverages">Beverages</option>
-            <option class='gs-hover-white' value="Household">Household</option>
-            <option class='gs-hover-white' value="Baby">Baby</option>
-            <option class='gs-hover-white' value="Freezer">Freezer</option>
-          </select>
-        </p> -->
       </header>
-
       <table id='customers' class='display gs-grid-table' style='width:100%'>
         <thead>
           <tr>
@@ -55,12 +37,9 @@
           </tr>
         </thead>
       </table>
-
     </div>
     <hr>
   </div>
-
-
   <div class='gs-container gs-padding-16 gs-card' style='background-color:#eee'>
     <h3 class='gs-center'>Grocery Shop Web Application</h3>
     <div class='gs-content' style='max-width:800px'>
@@ -95,6 +74,19 @@
   }
 
 
+  function addNewCustomer () {
+    loadPopUp("addNewCustomer");
+    onloadAddForm();
+  }
+
+  function updateCustomer (id) {
+    loadPopUp("updateCustomer");
+    $("#recodeId").empty();
+    $("#recodeId").append(" "+id+"");
+    loadUpdateForm(id);
+  }
+
+
   function formatCustomers (d) {
     return 'Full name: '+d.name+' '+d.code+'<br>'+
         'Salary: '+d.position+'<br>'+
@@ -105,6 +97,7 @@
       var dt = $('#customers').DataTable( {
           "processing": true,
           "serverSide": true,
+          "lengthMenu": [[10, 50, 100, 500, 1000, 5000], [10, 50, 100, 500, 1000, 5000]],
           "ajax": { "url": "<?=$_DOMAIN?>api/grid/customers/", "type": "POST" },
           "columns": [
               { "class": "details-control", "orderable": false, "data": null, "defaultContent": "" },

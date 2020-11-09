@@ -35,11 +35,11 @@
       </header>
       <style>
       .label { color: white; padding: 4px; border-radius: 3px; font-family: Arial;}
-      .success {background-color: #4CAF50;} /* Green */
-      .info {background-color: #2196F3;} /* Blue */
-      .warning {background-color: #ff9800;} /* Orange */
-      .danger {background-color: #f44336;} /* Red */ 
-      .other {background-color: #e7e7e7; color: black;} /* Gray */ 
+      .success {background-color: #4CAF50; font-size:12px;} /* Green */
+      .info {background-color: #2196F3; font-size:12px;} /* Blue */
+      .warning {background-color: #ff9800; font-size:12px;} /* Orange */
+      .danger {background-color: #f44336; font-size:12px;} /* Red */ 
+      .other {background-color: #e7e7e7; color: black; font-size:12px;} /* Gray */ 
       </style>
       <table id='users' class='display gs-grid-table' style='width:100%'>
         <thead>
@@ -99,11 +99,12 @@
     tablesToExcel(['users'], ['Users_Sheet'], 'Users_Data.xls', 'Excel');
   }
 
-  function addNewItem () {
+  function addNewUser () {
     loadPopUp("addNewUser");
+    onloadAddForm();
   }
 
-  function updateItem (id) {
+  function updateUser (id) {
     loadPopUp("updateUser");
     $("#recodeId").empty();
     $("#recodeId").append(" "+id+"");
