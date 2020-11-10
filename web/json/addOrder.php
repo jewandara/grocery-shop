@@ -14,7 +14,7 @@ function addOrders($amount, $balance) {
 function updateOrders($id, $amount, $balance) {
 	global $_SQL,$_PREFIX; 
 	$stmt = $_SQL->prepare("UPDATE ".$_PREFIX."orders SET status='OPEN', amount=?, balance=? WHERE id=?");
-	$stmt->bind_param("idd", intval($id), floatval($amount), floatval($balance) );
+	$stmt->bind_param("ddi", floatval($amount), floatval($balance), intval($id));
 	$stmt->execute();
 	$stmt->close();
 }
